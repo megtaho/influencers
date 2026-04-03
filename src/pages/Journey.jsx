@@ -23,19 +23,19 @@ export default function Journey() {
       number: '01', tag: t(lang, 'journey.fashion.tag'),
       title: t(lang, 'journey.fashion.title'), desc: t(lang, 'journey.fashion.desc'),
       image: FASHION_IMG, alt: 'Fashion',
-      stats: [{ label: t(lang, 'journey.collab'), value: '120+' }, { label: t(lang, 'journey.fashionweeks'), value: '24' }],
+      stats: [{ label: t(lang, 'journey.collab'), value: '20+' }],
     },
     {
       number: '02', tag: t(lang, 'journey.travel.tag'),
       title: t(lang, 'journey.travel.title'), desc: t(lang, 'journey.travel.desc'),
       image: TRAVEL_IMG, alt: 'Travel',
-      stats: [{ label: t(lang, 'journey.countries'), value: '47' }, { label: t(lang, 'journey.partners'), value: '85+' }],
+      stats: [{ label: t(lang, 'journey.countries'), value: '10' }, { label: t(lang, 'journey.partners'), value: '15+' }],
     },
     {
       number: '03', tag: t(lang, 'journey.lifestyle.tag'),
       title: t(lang, 'journey.lifestyle.title'), desc: t(lang, 'journey.lifestyle.desc'),
       image: LIFESTYLE_IMG, alt: 'Lifestyle',
-      stats: [{ label: t(lang, 'journey.brands'), value: '60+' }, { label: t(lang, 'journey.content'), value: '2,400+' }],
+      stats: [{ label: t(lang, 'journey.brands'), value: '30+' }, { label: t(lang, 'journey.content'), value: '70+' }],
     },
   ];
 
@@ -64,7 +64,7 @@ export default function Journey() {
             role={t(lang, 'journey.megan.role')}
             bio={t(lang, 'journey.megan.bio')}
             image={MEGAN_IMG}
-            tags={lang === 'fr' ? ['Ingénieure', 'Chrétienne', 'Love Activist', 'Tech'] : ['Engineer', 'Christian', 'Love Activist', 'Tech']}
+            tags={lang === 'fr' ? ['Ingénieure', 'Artiste', 'Tech', 'Activiste'] : ['Engineer', 'Artist', 'Tech', 'Love Activist']}
             delay={0}
           />
           <MemberCard
@@ -72,7 +72,7 @@ export default function Journey() {
             role={t(lang, 'journey.imaan.role')}
             bio={t(lang, 'journey.imaan.bio')}
             image={IMAAN_IMG}
-            tags={lang === 'fr' ? ['Architecte', 'Céramique', 'Couture', 'Love Activist'] : ['Architect', 'Ceramics', 'Sewing', 'Love Activist']}
+            tags={lang === 'fr' ? ['Architecte', 'Artiste', 'Couture', 'Activiste'] : ['Architect', 'Artist', 'Sewing', 'Love Activist']}
             delay={0.15}
           />
         </div>

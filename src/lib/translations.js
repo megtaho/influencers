@@ -106,7 +106,7 @@ const translations = {
   // Contact
   'contact.tag': { fr: 'Contact', en: 'Contact' },
   'contact.title': { fr: "Travaillons\nensemble.", en: "Let's work\ntogether." },
-  'contact.desc': { fr: 'Vous souhaitez collaborer avec nous ? Racontez-nous votre projet et nous vous répondrons sous 48 heures.', en: 'Want to collaborate with us? Tell us about your project and we will respond within 48 hours.' },
+  'contact.desc': { fr: 'Vous souhaitez collaborer avec nous ? Racontez-nous votre projet et nous vous répondrons.', en: 'Want to collaborate with us? Tell us about your project and we will respond.' },
   'contact.name': { fr: 'Nom', en: 'Name' },
   'contact.email': { fr: 'Email', en: 'Email' },
   'contact.company': { fr: 'Entreprise', en: 'Company' },
