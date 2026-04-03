@@ -129,8 +129,7 @@ export default function Contact() {
               </div>
               <div className="h-px bg-border" />
               <div>
-                <h3 className="font-display text-lg text-foreground mb-3">{t(lang, 'contact.delay')}</h3>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">{t(lang, 'contact.delaytext')}</p>
+                
               </div>
             </div>
           </ScrollReveal>
