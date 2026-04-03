@@ -10,8 +10,6 @@ export default function VideoScrubber({ videoSrc }) {
     if (!video) return;
 
     const handleLoaded = () => {
-      video.pause();
-      video.currentTime = 0;
       setReady(true);
     };
 
@@ -44,6 +42,8 @@ export default function VideoScrubber({ videoSrc }) {
           ref={videoRef}
           src={videoSrc}
           muted
+          autoPlay
+          loop
           playsInline
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"

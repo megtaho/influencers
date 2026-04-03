@@ -7,7 +7,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
-const DEFAULT_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+const DEFAULT_VIDEO = '/video.mp4';
 
 export default function Home() {
   const lang = useLanguage();
