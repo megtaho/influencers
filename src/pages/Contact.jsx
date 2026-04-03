@@ -10,9 +10,9 @@ import { t } from '../lib/translations';
 import { toast } from 'sonner';
 
 const socials = [
-  { icon: Instagram, label: 'Instagram', handle: '@lesgawas', href: 'https://instagram.com/lesgawas' },
-  { icon: Youtube, label: 'YouTube', handle: 'Les Gawas', href: '#' },
-  { icon: Music, label: 'TikTok', handle: '@lesgawas', href: '#' },
+  { icon: Instagram, label: 'Instagram', handle: '@lesgawas', href: 'https://www.instagram.com/les.gawas/' },
+  { icon: Youtube, label: 'YouTube', handle: 'Les Gawas', href: 'https://www.youtube.com/@Lesgawas' },
+  { icon: Music, label: 'TikTok', handle: '@lesgawas', href: 'https://www.tiktok.com/@les.gawas' },
 ];
 
 export default function Contact() {
@@ -110,7 +110,7 @@ export default function Contact() {
                   </a>
                   <div className="flex items-center gap-3 font-body text-sm text-muted-foreground">
                     <MapPin size={16} className="text-accent" />
-                    Paris, France
+                    Internationale
                   </div>
                 </div>
               </div>
