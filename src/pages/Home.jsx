@@ -12,25 +12,19 @@ const DEFAULT_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucke
 export default function Home() {
   const lang = useLanguage();
   const heroRef = useRef(null);
-  const [videoSrc, setVideoSrc] = useState(DEFAULT_VIDEO);
-  const fileInputRef = useRef(null);
+
+
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const titleOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -60]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
 
-  const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('video/')) {
-      const url = URL.createObjectURL(file);
-      setVideoSrc(url);
-    }
-  };
+
 
   return (
     <div className="bg-background">
       <div ref={heroRef} className="relative">
-        <VideoScrubber videoSrc={videoSrc} />
+        <VideoScrubber videoSrc={DEFAULT_VIDEO} />
         <motion.div
           style={{ opacity: titleOpacity, y: titleY }}
           className="fixed top-0 left-0 right-0 h-screen flex flex-col items-center justify-center z-10 pointer-events-none"
@@ -64,20 +58,7 @@ export default function Home() {
             {t(lang, 'home.intro')}
           </motion.p>
         </motion.div>
-        {/* Upload button - only visible to admin */}
-        <motion.div
-          style={{ opacity: scrollIndicatorOpacity }}
-          className="fixed bottom-8 right-6 z-10"
-        >
-          <input ref={fileInputRef} type="file" accept="video/*" className="hidden" onChange={handleVideoUpload} />
-          <button
-            onClick={() => fileInputRef.current.click()}
-            className="flex items-center gap-2 bg-black/40 backdrop-blur-sm text-white/70 hover:text-white font-body text-[10px] tracking-[0.2em] uppercase px-3 py-2 rounded-sm transition-all hover:bg-black/60 border border-white/10"
-          >
-            <Upload size={12} />
-            {lang === 'fr' ? 'Changer vidéo' : 'Change video'}
-          </button>
-        </motion.div>
+
 
         <motion.div
           style={{ opacity: scrollIndicatorOpacity }}
