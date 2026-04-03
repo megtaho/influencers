@@ -5,11 +5,11 @@ import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
-const FASHION_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/49710cc26_generated_bb1180cf.png';
-const TRAVEL_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/c1e2ef2ae_generated_e05319cc.png';
-const LIFESTYLE_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/501cc51cc_generated_355b0791.png';
-const MEGAN_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/374593be5_generated_image.png';
-const IMAAN_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/cfabf7fef_generated_image.png';
+const FASHION_IMG = '/IMG3.JPG';
+const TRAVEL_IMG = '/IMG2.jpg';
+const LIFESTYLE_IMG = '/IMG1.PNG';
+const MEGAN_IMG = '/IMG_1001.jpg';
+const IMAAN_IMG = '/IMG_5276.jpg';
 
 export default function Journey() {
   const lang = useLanguage();
