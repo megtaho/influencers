@@ -11,16 +11,16 @@ export default function MediaKit() {
   const lang = useLanguage();
 
   const platforms = [
-    { name: 'Instagram', icon: Instagram, followers: '2.4M', engagement: '4.8%', color: 'from-pink-500 to-purple-500' },
-    { name: 'YouTube', icon: Youtube, followers: '890K', engagement: '6.2%', color: 'from-red-500 to-red-600' },
-    { name: 'TikTok', icon: Music, followers: '3.1M', engagement: '8.5%', color: 'from-cyan-400 to-blue-500' },
+    { name: 'Instagram', icon: Instagram, followers: '117k', engagement: '8%', color: 'from-pink-500 to-purple-500' },
+    { name: 'YouTube', icon: Youtube, followers: '1.6K', engagement: '1.2%', color: 'from-red-500 to-red-600' },
+    { name: 'TikTok', icon: Music, followers: '70k', engagement: '6.5%', color: 'from-cyan-400 to-blue-500' },
   ];
 
   const stats = [
-    { icon: Users, value: '6.4M+', label: t(lang, 'media.community') },
-    { icon: Eye, value: '45M+', label: t(lang, 'media.impressions') },
-    { icon: Heart, value: '5.8%', label: t(lang, 'media.engagement') },
-    { icon: Share2, value: '2,400+', label: t(lang, 'media.contents') },
+    { icon: Users, value: '195k+', label: t(lang, 'media.community') },
+    { icon: Eye, value: '2M+', label: t(lang, 'media.impressions') },
+    { icon: Heart, value: '8%', label: t(lang, 'media.engagement') },
+    { icon: Share2, value: '400+', label: t(lang, 'media.contents') },
   ];
 
   const services = [
