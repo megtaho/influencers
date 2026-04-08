@@ -1,0 +1,1 @@
+# Task: Change browser tab title to "Les Gawas"\n\n## Steps:\n- [x] Update index.html title\n- [x] (Optional) Update package.json name\n- [x] Test by running `npm run dev`\n- [x] Complete task\n\n**Done!** Restart `npm run dev` to see "Les Gawas" in the browser tab.
