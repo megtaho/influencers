@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Upload, Play } from 'lucide-react';
+import { ChevronDown, Music, Instagram } from 'lucide-react';
 import VideoScrubber from '../components/VideoScrubber';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
@@ -13,13 +13,10 @@ export default function Home() {
   const lang = useLanguage();
   const heroRef = useRef(null);
 
-
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const titleOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -60]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-
-
 
   return (
     <div className="bg-background">
@@ -30,35 +27,38 @@ export default function Home() {
           className="fixed top-0 left-0 right-0 h-screen flex flex-col items-center justify-center z-10 pointer-events-none"
         >
           <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
             className="font-body text-white/70 text-xs md:text-sm tracking-[0.3em] uppercase mb-4"
           >
             {t(lang, 'home.tagline')}
           </motion.p>
           <motion.h1
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
             className="font-display text-5xl md:text-8xl lg:text-9xl text-white text-center leading-none"
           >
             Les Gawas
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
             className="font-body text-white/60 text-sm md:text-base italic mt-4"
           >
             Megan & Imaan
           </motion.p>
           <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1 }}
             className="font-body text-white/50 text-xs md:text-sm tracking-widest uppercase mt-4"
           >
             {t(lang, 'home.intro')}
           </motion.p>
         </motion.div>
-
 
         <motion.div
           style={{ opacity: scrollIndicatorOpacity }}
@@ -96,8 +96,70 @@ export default function Home() {
               <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
             </Link>
           </ScrollReveal>
+
+          {/* Video Showcase */}
+          <ScrollReveal delay={0.6}>
+            <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 mt-32">{t(lang, 'home.content.title')}</p>
+            
+            <section className="mb-20">
+              <h3 className="font-display text-2xl md:text-3xl text-foreground mb-8 flex items-center gap-3">
+                <Music className="text-accent" size={32} />
+                {t(lang, 'home.tiktok')}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {tiktokVideos.map((video, index) => (
+                  <VideoSquare key={index} videoId={video.id} isTikTok />
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h3 className="font-display text-2xl md:text-3xl text-foreground mb-8 flex items-center gap-3">
+                <Instagram className="text-accent" size={32} />
+                {t(lang, 'home.instagram')}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                {instagramVideos.map((video, index) => (
+                  <VideoSquare key={index} videoId={video.id} label={video.label} />
+                ))}
+              </div>
+            </section>
+          </ScrollReveal>
         </div>
       </section>
+    </div>
+  );
+}
+
+const tiktokVideos = [
+  { id: '7465802918327799062' },
+  { id: '7558602416728444182' },
+  { id: '7396406633397538080' }
+];
+
+const instagramVideos = [
+  { id: 'DV-6yOlAGbB', label: 'Interview Pinknews' },
+  { id: 'DFgPOPTuF4E', label: 'Vidéo 1' },
+  { id: 'DPhiYjSDBwt', label: 'Vidéo 2' },
+  { id: 'DG-4AMNMaLB', label: 'Vidéo 3' }
+];
+
+function VideoSquare({ videoId, label = '', isTikTok = false }) {
+  const embedUrl = isTikTok 
+    ? `https://www.tiktok.com/embed/v2/${videoId}`
+    : `https://www.instagram.com/reel/${videoId}/embed`;
+
+  return (
+    <div className="aspect-square rounded-2xl border-2 border-border hover:border-accent overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]">
+      <iframe
+        src={embedUrl}
+        allowFullScreen
+        scrolling="no"
+        allow="encrypted-media; gyroscope; picture-in-picture; web-share"
+        className="w-full h-full border-0"
+        title={label}
+        loading="lazy"
+      />
     </div>
   );
 }
@@ -114,3 +176,4 @@ function ChapterCard({ number, title, description, delay }) {
     </ScrollReveal>
   );
 }
+

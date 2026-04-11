@@ -1,1 +1,9 @@
-# Task: Change browser tab title to "Les Gawas"\n\n## Steps:\n- [x] Update index.html title\n- [x] (Optional) Update package.json name\n- [x] Test by running `npm run dev`\n- [x] Complete task\n\n**Done!** Restart `npm run dev` to see "Les Gawas" in the browser tab.
+# Task Progress: Video Showcase on Homepage
+
+- [x] 1. Fix package.json and launch site
+- [x] 2. Add translations keys
+- [x] 3. Update Home.jsx with square links
+- [x] 4. Lint fix (running)
+- [ ] 5. Make videos autoplay/embed in squares using iframes for TikTok/Insta
+- [ ] 6. Test & complete
+

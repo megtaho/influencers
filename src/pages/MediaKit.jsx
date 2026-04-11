@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Instagram, Youtube, Music, Users, TrendingUp, Eye, Heart, Share2 } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { Instagram, Youtube, Music, Users, Eye, Heart, Share2 } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';

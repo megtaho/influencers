@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Package, Shirt, Box, Star, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingBag, X } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 

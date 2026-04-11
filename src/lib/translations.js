@@ -5,6 +5,7 @@ export const t = (lang, key) => {
 };
 
 const translations = {
+  // existing before Home...
   // Navbar
   'nav.home': { fr: 'Accueil', en: 'Home' },
   'nav.journey': { fr: 'Parcours', en: 'Journey' },
@@ -102,6 +103,11 @@ const translations = {
   'res.visit': { fr: 'Visiter', en: 'Visit' },
   'res.advocacy.title': { fr: 'Notre engagement', en: 'Our commitment' },
   'res.advocacy.desc': { fr: "Megan et Imaan — les Gawas — croient profondément que l'amour, l'inclusion et le respect sont des droits fondamentaux. Chrétiennes et musulmanes, noires et militantes, elles portent la conviction que la foi et l'amour de l'autre ne se contredisent jamais.", en: "Megan and Imaan — the Gawas — deeply believe that love, inclusion, and respect are fundamental rights. Christian and Muslim, Black women and activists, they carry the conviction that faith and love for one another are never in contradiction." },
+
+// Home content showcase
+  'home.content.title': { fr: 'Nos contenus', en: 'Our content' },
+  'home.tiktok': { fr: 'TikTok', en: 'TikTok' },
+  'home.instagram': { fr: 'Instagram Reels', en: 'Instagram Reels' },
 
   // Contact
   'contact.tag': { fr: 'Contact', en: 'Contact' },
