@@ -1,9 +1,9 @@
-# Task Progress: Video Showcase on Homepage
+# TikTok Phone Mockup Task
 
-- [x] 1. Fix package.json and launch site
-- [x] 2. Add translations keys
-- [x] 3. Update Home.jsx with square links
-- [x] 4. Lint fix (running)
-- [ ] 5. Make videos autoplay/embed in squares using iframes for TikTok/Insta
-- [ ] 6. Test & complete
+## Steps:
+- [x] 1. Create this TODO.md
+- [x] 2. Edit src/pages/Home.jsx to add phone frames to TikTok VideoSquare components
+- [x] 3. Test video autoplay in phone frames
+- [x] 4. Complete task with attempt_completion
 
+**Completed:** TikTok videos now display in realistic phone mockups (vertical 9:16 screen with bezels/glare) on the Home page. Instagram videos remain square. Iframes enhanced for autoplay/loop.

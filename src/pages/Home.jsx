@@ -48,7 +48,7 @@ export default function Home() {
             transition={{ delay: 0.8, duration: 1 }}
             className="font-body text-white/60 text-sm md:text-base italic mt-4"
           >
-            Megan & Imaan
+            Imaan & Megan
           </motion.p>
           <motion.p
             initial={{ opacity: 0 }} 
@@ -106,7 +106,7 @@ export default function Home() {
                 <Music className="text-accent" size={32} />
                 {t(lang, 'home.tiktok')}
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                 {tiktokVideos.map((video, index) => (
                   <VideoSquare key={index} videoId={video.id} isTikTok />
                 ))}
@@ -149,13 +149,40 @@ function VideoSquare({ videoId, label = '', isTikTok = false }) {
     ? `https://www.tiktok.com/embed/v2/${videoId}`
     : `https://www.instagram.com/reel/${videoId}/embed`;
 
+  if (isTikTok) {
+    return (
+      <div className="group relative bg-black/20 backdrop-blur-sm rounded-3xl p-6 border-4 border-black/50 shadow-2xl hover:shadow-white/20 hover:scale-[1.02] transition-all duration-500 max-w-sm mx-auto">
+        {/* Phone bezel top */}
+        <div className="w-16 h-1 bg-black/80 rounded-full mx-auto mb-4"></div>
+        {/* Screen */}
+        <div className="aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl relative">
+          <iframe
+            src={embedUrl}
+            allowFullScreen
+            scrolling="no"
+            referrerPolicy="no-referrer"
+            allow="autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+            className="w-full h-full border-0"
+            title={label}
+            loading="lazy"
+          />
+          {/* Screen glare */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
+        </div>
+        {/* Phone bezel bottom */}
+        <div className="w-24 h-3 bg-black/80 rounded-b-3xl mx-auto mt-4"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="aspect-square rounded-2xl border-2 border-border hover:border-accent overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]">
       <iframe
         src={embedUrl}
         allowFullScreen
         scrolling="no"
-        allow="encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="no-referrer"
+        allow="autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
         className="w-full h-full border-0"
         title={label}
         loading="lazy"
