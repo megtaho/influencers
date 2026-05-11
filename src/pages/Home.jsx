@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Music, Instagram } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import VideoScrubber from '../components/VideoScrubber';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
@@ -97,33 +97,12 @@ export default function Home() {
             </Link>
           </ScrollReveal>
 
-          {/* Video Showcase */}
+          {/* Video Showcase (TikTok/Instagram removed as requested) */}
           <ScrollReveal delay={0.6}>
-            <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 mt-32">{t(lang, 'home.content.title')}</p>
-            
-            <section className="mb-20">
-              <h3 className="font-display text-2xl md:text-3xl text-foreground mb-8 flex items-center gap-3">
-                <Music className="text-accent" size={32} />
-                {t(lang, 'home.tiktok')}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                {tiktokVideos.map((video, index) => (
-                  <VideoSquare key={index} videoId={video.id} isTikTok />
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <h3 className="font-display text-2xl md:text-3xl text-foreground mb-8 flex items-center gap-3">
-                <Instagram className="text-accent" size={32} />
-                {t(lang, 'home.instagram')}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                {instagramVideos.map((video, index) => (
-                  <VideoSquare key={index} videoId={video.id} label={video.label} />
-                ))}
-              </div>
-            </section>
+            <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 mt-32">
+              {t(lang, 'home.content.title')}
+            </p>
+            <div className="h-1" aria-hidden="true" />
           </ScrollReveal>
         </div>
       </section>
@@ -131,18 +110,7 @@ export default function Home() {
   );
 }
 
-const tiktokVideos = [
-  { id: '7465802918327799062' },
-  { id: '7558602416728444182' },
-  { id: '7396406633397538080' }
-];
-
-const instagramVideos = [
-  { id: 'DV-6yOlAGbB', label: 'Interview Pinknews' },
-  { id: 'DFgPOPTuF4E', label: 'Vidéo 1' },
-  { id: 'DPhiYjSDBwt', label: 'Vidéo 2' },
-  { id: 'DG-4AMNMaLB', label: 'Vidéo 3' }
-];
+// TikTok / Instagram contenus retirés pour le moment.
 
 function VideoSquare({ videoId, label = '', isTikTok = false }) {
   const embedUrl = isTikTok 
