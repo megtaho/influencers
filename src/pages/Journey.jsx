@@ -56,7 +56,7 @@ export default function Journey() {
       <section className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24">
         <ScrollReveal>
           <p className="font-body text-accent text-xs tracking-[0.3em] uppercase mb-2">{t(lang, 'journey.about.tag')}</p>
-          <h2 className="font-display text-3xl md:text-4xl text-foreground">Megan & Imaan</h2>
+          <h2 className="font-display text-3xl md:text-4xl text-foreground">Imaan & Megan</h2>
         </ScrollReveal>
         <div className="grid md:grid-cols-2 gap-12 mt-12">
           <MemberCard
@@ -108,12 +108,12 @@ export default function Journey() {
       {/* Bottom CTA */}
       <section className="py-24 md:py-40 text-center px-6">
         <ScrollReveal>
-          <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">Continuer</p>
+          <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">Continue</p>
           <h2 className="font-display text-3xl md:text-5xl text-foreground">
-            {lang === 'fr' ? <>Explorez nos <span className="text-accent">visuels</span></> : <>Explore our <span className="text-accent">visuals</span></>}
+            {lang === 'fr' ? <>Explorez nos <span className="text-accent">collaborations</span></> : <>Explore our <span className="text-accent">collaborations</span></>}
           </h2>
           <a href="/gallery" className="inline-block mt-8 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-accent transition-colors group">
-            {t(lang, 'journey.cta')} <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
+            {lang === 'fr' ? 'Voir les collaborations' : 'See collaborations'} <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
           </a>
         </ScrollReveal>
       </section>

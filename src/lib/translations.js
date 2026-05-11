@@ -9,7 +9,8 @@ const translations = {
   // Navbar
   'nav.home': { fr: 'Accueil', en: 'Home' },
   'nav.journey': { fr: 'Parcours', en: 'Journey' },
-  'nav.gallery': { fr: 'Galerie', en: 'Gallery' },
+  'nav.gallery': { fr: 'Collaborations', en: 'Collaborations' },
+  // (reste des traductions)
   'nav.mediakit': { fr: 'Media Kit', en: 'Media Kit' },
   'nav.resources': { fr: 'Ressources', en: 'Resources' },
   'nav.contact': { fr: 'Contact', en: 'Contact' },
@@ -55,7 +56,7 @@ const translations = {
   'journey.content': { fr: 'Contenus créés', en: 'Contents created' },
 
   // Gallery
-  'gallery.tag': { fr: 'Portfolio', en: 'Portfolio' },
+  'gallery.tag': { fr: 'Our Collaborations', en: 'Our Collaborations' },
   'gallery.title': { fr: 'La Galerie', en: 'The Gallery' },
   'gallery.desc': { fr: 'Une sélection de nos meilleurs moments capturés à travers le monde.', en: 'A selection of our best moments captured around the world.' },
   'gallery.all': { fr: 'Tout', en: 'All' },
