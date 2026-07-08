@@ -5,7 +5,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
-const HERO_IMG = 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/9cce3e88e_generated_1794015b.png';
+const HERO_IMG = '/IMG_4661.jpg';
 
 export default function MediaKit() {
   const lang = useLanguage();
@@ -17,7 +17,7 @@ export default function MediaKit() {
   ];
 
   const stats = [
-    { icon: Users, value: '195k+', label: t(lang, 'media.community') },
+    { icon: Users, value: '203k+', label: t(lang, 'media.community') },
     { icon: Eye, value: '2M+', label: t(lang, 'media.impressions') },
     { icon: Heart, value: '8%', label: t(lang, 'media.engagement') },
     { icon: Share2, value: '400+', label: t(lang, 'media.contents') },
@@ -30,7 +30,7 @@ export default function MediaKit() {
     { title: t(lang, 'media.s4.title'), desc: t(lang, 'media.s4.desc') },
   ];
 
-  const brands = ['Louis Vuitton', 'Dior', 'Chanel', 'Gucci', 'Cartier', 'Four Seasons', 'Aman Resorts', 'Emirates', 'BMW', 'Apple', 'Lancôme', 'YSL Beauty', 'Rolex', 'Hermès', 'Bulgari'];
+  const brands = ['Octopied Mind', 'Ohmu', 'Her app', 'Trip.com', 'Violette&co', 'Garnier', 'Tiktok', 'Soundgame', 'Wanderlog', 'Mac Cosmetics'];
 
   return (
     <div className="bg-background min-h-screen">
