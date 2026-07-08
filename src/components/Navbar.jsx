@@ -38,7 +38,7 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="font-display text-xl md:text-2xl font-semibold tracking-tight text-foreground">
+          <Link to="/" className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
             Les Gawas
           </Link>
           <div className="hidden md:flex items-center gap-8">
@@ -46,10 +46,10 @@ export default function Navbar() {
               <Link
                 key={l.to}
                 to={l.to}
-                className={`font-body text-xs tracking-widest uppercase transition-colors duration-300 ${
+                className={`nav-rainbow font-body text-sm tracking-widest uppercase transition-colors duration-300 ${
                   location.pathname === l.to
                     ? 'text-accent'
-                    : 'text-foreground/60 hover:text-foreground'
+                    : 'text-foreground/60'
                 }`}
               >
                 {l.label}

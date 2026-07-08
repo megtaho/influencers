@@ -56,7 +56,7 @@ const translations = {
   'journey.content': { fr: 'Contenus créés', en: 'Contents created' },
 
   // Gallery
-  'gallery.tag': { fr: 'Our Collaborations', en: 'Our Collaborations' },
+  'gallery.tag': { fr: 'Nos Collaborations', en: 'Our Collaborations' },
   'gallery.title': { fr: 'La Galerie', en: 'The Gallery' },
   'gallery.desc': { fr: 'Une sélection de nos meilleurs moments capturés à travers le monde.', en: 'A selection of our best moments captured around the world.' },
   'gallery.all': { fr: 'Tout', en: 'All' },
@@ -107,6 +107,8 @@ const translations = {
 
 // Home content showcase
   'home.content.title': { fr: 'Nos contenus', en: 'Our content' },
+  'home.content.subtitle': { fr: 'Un aperçu de notre univers, directement depuis Instagram.', en: 'A glimpse into our world, straight from Instagram.' },
+  'home.content.follow': { fr: 'Suivez-nous sur les réseaux', en: 'Follow us on social media' },
   'home.tiktok': { fr: 'TikTok', en: 'TikTok' },
   'home.instagram': { fr: 'Instagram Reels', en: 'Instagram Reels' },
 

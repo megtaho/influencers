@@ -64,7 +64,10 @@ export default function Journey() {
             role={t(lang, 'journey.megan.role')}
             bio={t(lang, 'journey.megan.bio')}
             image={MEGAN_IMG}
-            tags={lang === 'fr' ? ['Ingénieure', 'Artiste', 'Tech', 'Activiste'] : ['Engineer', 'Artist', 'Tech', 'Love Activist']}
+            tags={lang === 'fr'
+              ? ['Ingénieure', 'Artiste', 'Technologie', 'Mode', 'Activiste', 'Musique', 'Actrice']
+              : ['Engineer', 'Artist', 'Technology', 'Fashion', 'Activist', 'Music', 'Actress']}
+            marquee
             delay={0}
           />
           <MemberCard
@@ -72,7 +75,11 @@ export default function Journey() {
             role={t(lang, 'journey.imaan.role')}
             bio={t(lang, 'journey.imaan.bio')}
             image={IMAAN_IMG}
-            tags={lang === 'fr' ? ['Architecte', 'Artiste', 'Couture', 'Activiste'] : ['Architect', 'Artist', 'Sewing', 'Love Activist']}
+            tags={lang === 'fr'
+              ? ['Architecte', 'Artiste', 'Mode', 'Activiste', 'Couture', 'Céramique', 'Écrivaine']
+              : ['Architect', 'Artist', 'Fashion', 'Activist', 'Sewing', 'Ceramics', 'Writer']}
+            marquee
+            marqueeColor="#1E9E86"
             delay={0.15}
           />
         </div>
@@ -121,7 +128,7 @@ export default function Journey() {
   );
 }
 
-function MemberCard({ name, role, bio, image, tags, delay }) {
+function MemberCard({ name, role, bio, image, tags, delay, marquee = false, marqueeColor = null, marqueeReverse = false }) {
   return (
     <ScrollReveal delay={delay}>
       <div className="flex flex-col gap-6">
@@ -132,15 +139,44 @@ function MemberCard({ name, role, bio, image, tags, delay }) {
           <h3 className="font-display text-2xl text-foreground">{name}</h3>
           <p className="font-body text-accent text-sm mt-1">{role}</p>
           <p className="font-body text-muted-foreground text-sm leading-relaxed mt-4">{bio}</p>
-          <div className="flex flex-wrap gap-2 mt-5">
-            {tags.map((tag) => (
-              <span key={tag} className="font-body text-xs px-3 py-1 rounded-full border border-border text-muted-foreground">
-                {tag}
-              </span>
-            ))}
-          </div>
+          {marquee ? (
+            <TagMarquee tags={tags} color={marqueeColor} reverse={marqueeReverse} />
+          ) : (
+            <div className="flex flex-wrap gap-2 mt-5">
+              {tags.map((tag) => (
+                <span key={tag} className="font-body text-xs px-3 py-1 rounded-full border border-border text-muted-foreground">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </ScrollReveal>
+  );
+}
+
+function TagMarquee({ tags, color, reverse = false }) {
+  const loop = [...tags, ...tags];
+  const style = color ? { borderColor: `${color}66`, color } : undefined;
+  return (
+    <div className="mt-5 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+      <motion.div
+        className="flex w-max gap-3"
+        animate={{ x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
+      >
+        {loop.map((tag, i) => (
+          <span
+            key={`${tag}-${i}`}
+            className={`font-body text-xs px-3 py-1 rounded-full border whitespace-nowrap flex items-center gap-2 ${!color ? 'border-accent/40 text-accent' : ''}`}
+            style={style}
+          >
+            {tag}
+            <span className={!color ? 'text-accent/30' : ''} style={color ? { color: `${color}4d` } : undefined}>✦</span>
+          </span>
+        ))}
+      </motion.div>
+    </div>
   );
 }

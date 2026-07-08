@@ -1,13 +1,22 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Instagram, Youtube } from 'lucide-react';
 import VideoScrubber from '../components/VideoScrubber';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
 const DEFAULT_VIDEO = '/video.mp4';
+
+const INSTAGRAM_REELS = [
+  { code: 'DV-6yOlAGbB', color: '#E8412C' },
+  { code: 'DFgPOPTuF4E', color: '#FF8A00' },
+  { code: 'DPCbm0SjENV', color: '#FFD500' },
+  { code: 'DXxMljHsAtb', color: '#22B14C' },
+  { code: 'DUq7YnWDIth', color: '#0072FF' },
+  { code: 'DR5awkNDYqs', color: '#9B30D9' },
+];
 
 export default function Home() {
   const lang = useLanguage();
@@ -97,65 +106,113 @@ export default function Home() {
             </Link>
           </ScrollReveal>
 
-          {/* Video Showcase (TikTok/Instagram removed as requested) */}
-          <ScrollReveal delay={0.6}>
-            <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 mt-32">
-              {t(lang, 'home.content.title')}
-            </p>
-            <div className="h-1" aria-hidden="true" />
-          </ScrollReveal>
+          {/* Instagram Showcase */}
+          <div className="mt-32">
+            <ScrollReveal delay={0.6}>
+              <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">
+                {t(lang, 'home.content.title')}
+              </p>
+              <h3 className="font-display text-2xl md:text-3xl text-foreground max-w-lg">
+                {t(lang, 'home.content.subtitle')}
+              </h3>
+            </ScrollReveal>
+
+            <div className="flex flex-wrap justify-center items-end gap-x-6 gap-y-14 md:gap-x-8 mt-16 md:mt-24">
+              {INSTAGRAM_REELS.map((reel, i) => (
+                <PhoneReel
+                  key={reel.code}
+                  code={reel.code}
+                  color={reel.color}
+                  delay={0.1 * i}
+                  rotate={i % 3 === 1 ? 2 : i % 3 === 2 ? -2 : 0}
+                  offset={i % 2 === 1 ? 'md:-translate-y-6' : ''}
+                />
+              ))}
+            </div>
+
+            <ScrollReveal delay={0.3} className="mt-16 text-center">
+              <p className="font-body text-sm tracking-[0.2em] uppercase text-foreground/60 mb-5">
+                {t(lang, 'home.content.follow')}
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <a
+                  href="https://www.instagram.com/les.gawas/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border text-foreground/60 hover:text-accent hover:border-accent transition-colors duration-300"
+                >
+                  <Instagram size={18} />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@les.gawas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border text-foreground/60 hover:text-accent hover:border-accent transition-colors duration-300"
+                >
+                  <TikTokIcon size={17} />
+                </a>
+                <a
+                  href="https://www.youtube.com/@Lesgawas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border text-foreground/60 hover:text-accent hover:border-accent transition-colors duration-300"
+                >
+                  <Youtube size={19} />
+                </a>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
     </div>
   );
 }
 
-// TikTok / Instagram contenus retirés pour le moment.
+function TikTokIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.02 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" />
+    </svg>
+  );
+}
 
-function VideoSquare({ videoId, label = '', isTikTok = false }) {
-  const embedUrl = isTikTok 
-    ? `https://www.tiktok.com/embed/v2/${videoId}`
-    : `https://www.instagram.com/reel/${videoId}/embed`;
-
-  if (isTikTok) {
-    return (
-      <div className="group relative bg-black/20 backdrop-blur-sm rounded-3xl p-6 border-4 border-black/50 shadow-2xl hover:shadow-white/20 hover:scale-[1.02] transition-all duration-500 max-w-sm mx-auto">
-        {/* Phone bezel top */}
-        <div className="w-16 h-1 bg-black/80 rounded-full mx-auto mb-4"></div>
-        {/* Screen */}
-        <div className="aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl relative">
+function PhoneReel({ code, color, delay, rotate, offset }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 90, scaleY: 0.4 }}
+      whileInView={{ opacity: 1, y: 0, scaleY: 1 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      style={{ transformOrigin: 'bottom center' }}
+      className={`flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px] ${offset}`}
+    >
+      <div
+        className="group relative rounded-[2rem] p-[7px] shadow-2xl transition-transform duration-500 hover:-translate-y-3"
+        style={{ backgroundColor: color, transform: `rotate(${rotate}deg)` }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'rotate(0deg)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = `rotate(${rotate}deg)`)}
+      >
+        <div className="absolute -right-[3px] top-14 w-[3px] h-7 rounded-full bg-black/25" />
+        <div className="absolute -left-[3px] top-20 w-[3px] h-10 rounded-full bg-black/25" />
+        <div className="relative bg-black rounded-[1.6rem] overflow-hidden aspect-[9/19]">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-black rounded-full z-20" />
           <iframe
-            src={embedUrl}
+            src={`https://www.instagram.com/reel/${code}/embed`}
             allowFullScreen
             scrolling="no"
             referrerPolicy="no-referrer"
             allow="autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             className="w-full h-full border-0"
-            title={label}
+            title={`Instagram reel ${code}`}
             loading="lazy"
           />
-          {/* Screen glare */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
         </div>
-        {/* Phone bezel bottom */}
-        <div className="w-24 h-3 bg-black/80 rounded-b-3xl mx-auto mt-4"></div>
       </div>
-    );
-  }
-
-  return (
-    <div className="aspect-square rounded-2xl border-2 border-border hover:border-accent overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02]">
-      <iframe
-        src={embedUrl}
-        allowFullScreen
-        scrolling="no"
-        referrerPolicy="no-referrer"
-        allow="autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-        className="w-full h-full border-0"
-        title={label}
-        loading="lazy"
-      />
-    </div>
+      <div className="h-3 mx-6 mt-1 rounded-full blur-md opacity-40" style={{ backgroundColor: color }} aria-hidden="true" />
+    </motion.div>
   );
 }
 

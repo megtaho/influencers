@@ -36,7 +36,7 @@ export default function VideoScrubber({ videoSrc }) {
   }, [ready]);
 
   return (
-    <div ref={containerRef} className="relative h-[500vh]">
+    <div ref={containerRef} className="relative h-[180vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <video
           ref={videoRef}
