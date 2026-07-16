@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
@@ -181,7 +181,7 @@ function CategoryBlock({ name, lang, collections }) {
             <div className="flex-1 h-px bg-gradient-to-r from-accent/50 to-transparent" />
           </div>
         </ScrollReveal>
-        <FlatRow items={flattenCollections(collections, lang)} />
+        <MarqueeRow items={flattenCollections(collections, lang)} />
       </section>
     );
   }
@@ -195,7 +195,7 @@ function CategoryBlock({ name, lang, collections }) {
             <div className="flex-1 h-px bg-gradient-to-r from-accent/50 to-transparent" />
           </div>
         </ScrollReveal>
-        <MapRow items={flattenCollections(collections, lang)} />
+        <PlainRow items={flattenCollections(collections, lang)} />
       </section>
     );
   }
@@ -213,39 +213,28 @@ function CategoryBlock({ name, lang, collections }) {
   );
 }
 
-const WORLD_MAP_URL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/1280px-World_map_blank_without_borders.svg.png';
-
-function MapRow({ items }) {
+function MarqueeRow({ items }) {
+  const loop = [...items, ...items];
+  const duration = Math.max(20, items.length * 5);
+  const [playing, setPlaying] = useState(false);
   return (
     <ScrollReveal>
-      <div
-        className="relative overflow-hidden rounded-2xl px-6 py-10 md:px-10 md:py-14 shadow-2xl bg-[#0b2a3d]"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(6,26,38,0.82), rgba(10,38,54,0.88)), url(${WORLD_MAP_URL})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
         <div
-          className="absolute inset-x-0 top-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)' }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-x-0 bottom-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)' }}
-          aria-hidden="true"
-        />
-
-        <div className="relative flex gap-5 md:gap-6 overflow-x-auto pb-2 -mx-1 px-1 [scrollbar-width:thin]">
-          {items.map((item, i) => (
+          className="flex w-max gap-5 md:gap-6"
+          style={{
+            animation: `gallery-marquee ${duration}s linear infinite`,
+            animationPlayState: playing ? 'paused' : 'running',
+          }}
+        >
+          {loop.map((item, i) => (
             <div key={item.id + i} className="flex-shrink-0 w-[190px] sm:w-[210px] md:w-[230px] group">
-              <div className="aspect-[9/16] rounded-sm overflow-hidden border-2 border-white/70 bg-black shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:border-accent">
-                <LazyTikTok id={item.id} caption={item.caption} />
+              <div className="aspect-[9/16] rounded-sm overflow-hidden border border-border bg-black shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-accent/40 group-hover:-translate-y-1">
+                <LazyTikTok id={item.id} caption={item.caption} onPlay={() => setPlaying(true)} />
               </div>
               <div className="mt-3 flex items-center justify-center gap-2">
                 <BrandLogo src={item.logo} alt={item.caption} size={16} />
-                <p className="font-body text-xs text-center tracking-wide text-white/90">{item.caption}</p>
+                <p className="font-body text-xs text-center text-muted-foreground tracking-wide">{item.caption}</p>
               </div>
             </div>
           ))}
@@ -255,65 +244,56 @@ function MapRow({ items }) {
   );
 }
 
-function FlatRow({ items }) {
-  return (
-    <ScrollReveal>
-      <div
-        className="relative overflow-hidden rounded-2xl px-6 py-10 md:px-10 md:py-14 shadow-2xl"
-        style={{ background: 'linear-gradient(180deg, #7d0f1f 0%, #9e1428 12%, #a3162b 50%, #9e1428 88%, #7d0f1f 100%)' }}
-      >
-        <div
-          className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1.5px)', backgroundSize: '10px 10px' }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-x-0 top-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)' }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-x-0 bottom-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)' }}
-          aria-hidden="true"
-        />
+const tiktokThumbCache = new Map();
 
-        <div className="relative flex gap-5 md:gap-6 overflow-x-auto pb-2 -mx-1 px-1 [scrollbar-width:thin]">
-          {items.map((item, i) => (
-            <div key={item.id + i} className="flex-shrink-0 w-[190px] sm:w-[210px] md:w-[230px] group">
-              <div
-                className="aspect-[9/16] rounded-sm overflow-hidden border-2 bg-black shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2"
-                style={{ borderColor: 'rgba(212,175,55,0.55)' }}
-              >
-                <LazyTikTok id={item.id} caption={item.caption} />
-              </div>
-              <div className="mt-3 flex items-center justify-center gap-2">
-                <BrandLogo src={item.logo} alt={item.caption} size={16} />
-                <p className="font-body text-xs text-center tracking-wide" style={{ color: '#e9c874' }}>{item.caption}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </ScrollReveal>
-  );
+function useTikTokThumbnail(id) {
+  const [thumbnail, setThumbnail] = useState(() => tiktokThumbCache.get(id) ?? null);
+
+  useEffect(() => {
+    if (tiktokThumbCache.has(id)) {
+      setThumbnail(tiktokThumbCache.get(id));
+      return;
+    }
+    let cancelled = false;
+    fetch(`https://www.tiktok.com/oembed?url=https://www.tiktok.com/@x/video/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const url = data.thumbnail_url || null;
+        tiktokThumbCache.set(id, url);
+        if (!cancelled) setThumbnail(url);
+      })
+      .catch(() => {
+        tiktokThumbCache.set(id, null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  return thumbnail;
 }
 
-function LazyTikTok({ id, caption }) {
+function LazyTikTok({ id, caption, onPlay }) {
   const [loaded, setLoaded] = useState(false);
+  const thumbnail = useTikTokThumbnail(id);
 
   if (!loaded) {
     return (
       <button
         type="button"
-        onClick={() => setLoaded(true)}
+        onClick={() => {
+          setLoaded(true);
+          onPlay?.();
+        }}
         aria-label={caption ? `${caption} — lecture` : 'Lecture'}
-        className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900"
+        className="relative w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900 bg-cover bg-center"
+        style={thumbnail ? { backgroundImage: `url(${thumbnail})` } : undefined}
       >
-        <span className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/25 transition-transform duration-300 group-hover:scale-110">
+        <div className="absolute inset-0 bg-black/35" />
+        <span className="relative w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/25 transition-transform duration-300 group-hover:scale-110">
           <Play size={18} className="text-white fill-white ml-0.5" />
         </span>
-        <span className="font-body text-[10px] tracking-[0.25em] uppercase text-white/40">TikTok</span>
+        <span className="relative font-body text-[10px] tracking-[0.25em] uppercase text-white/40">TikTok</span>
       </button>
     );
   }
