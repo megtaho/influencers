@@ -172,34 +172,6 @@ function flattenCollections(collections, lang) {
 function CategoryBlock({ name, lang, collections }) {
   const label = name === 'Mode' ? (lang === 'fr' ? 'Mode' : 'Fashion') : name === 'Voyage' ? (lang === 'fr' ? 'Voyage' : 'Travel') : 'Lifestyle';
 
-  if (name === 'Mode') {
-    return (
-      <section className="mb-24 md:mb-32 last:mb-0">
-        <ScrollReveal>
-          <div className="flex items-center gap-6 mb-14 md:mb-16">
-            <h2 className="font-display text-3xl md:text-5xl text-foreground whitespace-nowrap">{label}</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-accent/50 to-transparent" />
-          </div>
-        </ScrollReveal>
-        <MarqueeRow items={flattenCollections(collections, lang)} />
-      </section>
-    );
-  }
-
-  if (name === 'Voyage') {
-    return (
-      <section className="mb-24 md:mb-32 last:mb-0">
-        <ScrollReveal>
-          <div className="flex items-center gap-6 mb-14 md:mb-16">
-            <h2 className="font-display text-3xl md:text-5xl text-foreground whitespace-nowrap">{label}</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-accent/50 to-transparent" />
-          </div>
-        </ScrollReveal>
-        <PlainRow items={flattenCollections(collections, lang)} />
-      </section>
-    );
-  }
-
   return (
     <section className="mb-24 md:mb-32 last:mb-0">
       <ScrollReveal>
@@ -208,37 +180,86 @@ function CategoryBlock({ name, lang, collections }) {
           <div className="flex-1 h-px bg-gradient-to-r from-accent/50 to-transparent" />
         </div>
       </ScrollReveal>
-      <PlainRow items={flattenCollections(collections, lang)} />
+      <MarqueeRow items={flattenCollections(collections, lang)} />
     </section>
   );
 }
 
 function MarqueeRow({ items }) {
   const loop = [...items, ...items];
-  const duration = Math.max(20, items.length * 5);
   const [playing, setPlaying] = useState(false);
+  const scrollerRef = useRef(null);
+  const pausedRef = useRef(false);
+  const resumeTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    let rafId;
+    const speed = 0.6;
+    function tick() {
+      const el = scrollerRef.current;
+      if (el && !playing && !pausedRef.current) {
+        const half = el.scrollWidth / 2;
+        el.scrollLeft += speed;
+        if (el.scrollLeft >= half) el.scrollLeft -= half;
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [playing]);
+
+  useEffect(() => () => clearTimeout(resumeTimeoutRef.current), []);
+
+  function nudge(direction) {
+    const el = scrollerRef.current;
+    if (!el) return;
+    pausedRef.current = true;
+    el.scrollBy({ left: direction * 400, behavior: 'smooth' });
+    clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      pausedRef.current = false;
+    }, 900);
+  }
+
   return (
     <ScrollReveal>
-      <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
-        <div
-          className="flex w-max gap-5 md:gap-6"
-          style={{
-            animation: `gallery-marquee ${duration}s linear infinite`,
-            animationPlayState: playing ? 'paused' : 'running',
-          }}
+      <div className="flex items-center gap-3 md:gap-6">
+        <button
+          type="button"
+          onClick={() => nudge(-1)}
+          aria-label="Précédent"
+          className="flex-shrink-0 w-14 h-14 md:w-20 md:h-20 rounded-full border border-border flex items-center justify-center hover:border-accent/50 hover:scale-105 transition-all duration-300"
         >
-          {loop.map((item, i) => (
-            <div key={item.id + i} className="flex-shrink-0 w-[190px] sm:w-[210px] md:w-[230px] group">
-              <div className="aspect-[9/16] rounded-sm overflow-hidden border border-border bg-black shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-accent/40 group-hover:-translate-y-1">
-                <LazyTikTok id={item.id} caption={item.caption} onPlay={() => setPlaying(true)} />
+          <span className="gallery-arrow font-display text-4xl md:text-6xl leading-none select-none">‹</span>
+        </button>
+
+        <div
+          ref={scrollerRef}
+          className="flex-1 min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,transparent,black_2%,black_98%,transparent)]"
+        >
+          <div className="flex w-max gap-5 md:gap-6">
+            {loop.map((item, i) => (
+              <div key={item.id + i} className="flex-shrink-0 w-[190px] sm:w-[210px] md:w-[230px] group">
+                <div className="aspect-[9/16] rounded-sm overflow-hidden border border-border bg-black shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-accent/40 group-hover:-translate-y-1">
+                  <LazyTikTok id={item.id} caption={item.caption} onPlay={() => setPlaying(true)} />
+                </div>
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  <BrandLogo src={item.logo} alt={item.caption} size={16} />
+                  <p className="font-body text-xs text-center text-muted-foreground tracking-wide">{item.caption}</p>
+                </div>
               </div>
-              <div className="mt-3 flex items-center justify-center gap-2">
-                <BrandLogo src={item.logo} alt={item.caption} size={16} />
-                <p className="font-body text-xs text-center text-muted-foreground tracking-wide">{item.caption}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => nudge(1)}
+          aria-label="Suivant"
+          className="flex-shrink-0 w-14 h-14 md:w-20 md:h-20 rounded-full border border-border flex items-center justify-center hover:border-accent/50 hover:scale-105 transition-all duration-300"
+        >
+          <span className="gallery-arrow font-display text-4xl md:text-6xl leading-none select-none">›</span>
+        </button>
       </div>
     </ScrollReveal>
   );
@@ -323,22 +344,3 @@ function BrandLogo({ src, alt, size = 22 }) {
   );
 }
 
-function PlainRow({ items }) {
-  return (
-    <ScrollReveal>
-      <div className="flex gap-5 md:gap-6 overflow-x-auto pb-2 -mx-1 px-1 [scrollbar-width:thin]">
-        {items.map((item, i) => (
-          <div key={item.id + i} className="flex-shrink-0 w-[190px] sm:w-[210px] md:w-[230px] group">
-            <div className="aspect-[9/16] rounded-sm overflow-hidden border border-border bg-black shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:border-accent/40 group-hover:-translate-y-1">
-              <LazyTikTok id={item.id} caption={item.caption} />
-            </div>
-            <div className="mt-3 flex items-center justify-center gap-2">
-              <BrandLogo src={item.logo} alt={item.caption} size={16} />
-              <p className="font-body text-xs text-center text-muted-foreground tracking-wide">{item.caption}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </ScrollReveal>
-  );
-}

@@ -113,11 +113,12 @@
   }
 }
 
-@keyframes gallery-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+.gallery-arrow {
+  background-image: linear-gradient(90deg, #ff0000, #ff8c00, #ffee00, #00c853, #00b0ff, #7c4dff, #ff0000);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: nav-rainbow-shift 4s linear infinite;
 }
