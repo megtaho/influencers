@@ -45,6 +45,7 @@ export default function Contact() {
           type: form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '',
           message: form.message,
           website: form.website,
+          lang,
         }),
       });
       const result = await res.json();
