@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { base44 } from '@/api/base44Client';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
@@ -22,7 +21,7 @@ const COLLAB_TYPE_LABELS = { brand: 'media.s1.title', stories: 'media.s2.title',
 export default function Contact() {
   const lang = useLanguage();
   const [sending, setSending] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', message: '', website: '' });
 
   const updateField = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 
@@ -36,22 +35,23 @@ export default function Contact() {
 
     setSending(true);
     try {
-      await base44.integrations.Core.SendEmail({
-        to: 'contact@lesgawas.com',
-        subject: `Nouvelle demande de collaboration — ${form.name}`,
-        from_name: form.name,
-        body: [
-          `Nom: ${form.name}`,
-          `Email: ${form.email}`,
-          `Entreprise: ${form.company || '—'}`,
-          `Type de collaboration: ${form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '—'}`,
-          '',
-          'Message:',
-          form.message,
-        ].join('\n'),
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          company: form.company,
+          type: form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '',
+          message: form.message,
+          website: form.website,
+        }),
       });
+      const result = await res.json();
+      if (!res.ok || !result.success) throw new Error(result.error || 'send failed');
+
       toast.success(t(lang, 'contact.success'));
-      setForm({ name: '', email: '', company: '', type: '', message: '' });
+      setForm({ name: '', email: '', company: '', type: '', message: '', website: '' });
     } catch {
       toast.error(t(lang, 'contact.error'));
     } finally {
@@ -97,6 +97,15 @@ export default function Contact() {
         <div className="grid lg:grid-cols-5 gap-8 lg:gap-16">
           <ScrollReveal className="lg:col-span-3" delay={0.1}>
             <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-accent/20 rounded-lg p-6 md:p-10 shadow-xl">
+              <input
+                type="text"
+                value={form.website}
+                onChange={updateField('website')}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.name')}</label>
