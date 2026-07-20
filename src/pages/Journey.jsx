@@ -44,8 +44,7 @@ export default function Journey() {
       {/* Hero */}
       <div ref={heroRef} className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="text-center px-6">
-          <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">{t(lang, 'journey.tag')}</p>
-          <h1 className="font-display text-4xl md:text-7xl lg:text-8xl text-foreground leading-none">The Journey</h1>
+          <h1 className="font-display font-bold text-4xl md:text-7xl lg:text-8xl text-foreground leading-none">{t(lang, 'journey.tag')}</h1>
           <p className="font-body text-muted-foreground text-sm md:text-base mt-6 max-w-lg mx-auto leading-relaxed">
             {t(lang, 'journey.subtitle')}
           </p>

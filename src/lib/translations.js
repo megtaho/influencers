@@ -115,7 +115,7 @@ const translations = {
   // Contact
   'contact.tag': { fr: 'Contact', en: 'Contact' },
   'contact.title': { fr: "Travaillons\nensemble.", en: "Let's work\ntogether." },
-  'contact.desc': { fr: 'Vous souhaitez collaborer avec nous ? Racontez-nous votre projet et nous vous répondrons.', en: 'Want to collaborate with us? Tell us about your project and we will respond.' },
+  'contact.desc': { fr: 'Vous souhaitez collaborer avec nous ? Racontez-nous votre projet et nous vous répondrons avec notre media kit.', en: 'Want to collaborate with us? Tell us about your project and we will respond with our media kit.' },
   'contact.name': { fr: 'Nom', en: 'Name' },
   'contact.email': { fr: 'Email', en: 'Email' },
   'contact.company': { fr: 'Entreprise', en: 'Company' },
@@ -127,6 +127,8 @@ const translations = {
   'contact.socials': { fr: 'Réseaux sociaux', en: 'Social media' },
   'contact.info': { fr: 'Information', en: 'Information' },
   'contact.success': { fr: 'Message envoyé ! Nous vous répondrons.', en: 'Message sent! We will reply.' },
+  'contact.invalidEmail': { fr: 'Veuillez entrer une adresse email valide.', en: 'Please enter a valid email address.' },
+  'contact.error': { fr: "Une erreur est survenue, veuillez réessayer.", en: 'Something went wrong, please try again.' },
   'contact.nameph': { fr: 'Votre nom', en: 'Your name' },
   'contact.companph': { fr: 'Nom de votre marque', en: 'Your brand name' },
   'contact.messageph': { fr: 'Décrivez votre projet, vos objectifs, et le budget envisagé...', en: 'Describe your project, goals, and estimated budget...' },

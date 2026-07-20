@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { base44 } from '@/api/base44Client';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
@@ -15,55 +16,106 @@ const socials = [
   { icon: Music, label: 'TikTok', handle: '@lesgawas', href: 'https://www.tiktok.com/@les.gawas' },
 ];
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const COLLAB_TYPE_LABELS = { brand: 'media.s1.title', stories: 'media.s2.title', travel: 'media.s3.title', creative: 'media.s4.title' };
+
 export default function Contact() {
   const lang = useLanguage();
   const [sending, setSending] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const updateField = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!EMAIL_REGEX.test(form.email)) {
+      toast.error(t(lang, 'contact.invalidEmail'));
+      return;
+    }
+
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
+    try {
+      await base44.integrations.Core.SendEmail({
+        to: 'contact@lesgawas.com',
+        subject: `Nouvelle demande de collaboration — ${form.name}`,
+        from_name: form.name,
+        body: [
+          `Nom: ${form.name}`,
+          `Email: ${form.email}`,
+          `Entreprise: ${form.company || '—'}`,
+          `Type de collaboration: ${form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '—'}`,
+          '',
+          'Message:',
+          form.message,
+        ].join('\n'),
+      });
       toast.success(t(lang, 'contact.success'));
-      e.target.reset();
-    }, 1500);
+      setForm({ name: '', email: '', company: '', type: '', message: '' });
+    } catch {
+      toast.error(t(lang, 'contact.error'));
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
-    <div className="bg-background min-h-screen pt-20 md:pt-28">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 pb-20 md:pb-32">
-        <ScrollReveal>
-          <div className="max-w-2xl">
-            <p className="font-body text-accent text-xs tracking-[0.3em] uppercase mb-4">{t(lang, 'contact.tag')}</p>
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground leading-tight whitespace-pre-line">
-              {t(lang, 'contact.title')}
-            </h1>
-            <p className="font-body text-muted-foreground text-sm md:text-base leading-relaxed mt-6 max-w-lg">{t(lang, 'contact.desc')}</p>
-          </div>
-        </ScrollReveal>
+    <div className="bg-background min-h-screen">
+      <div className="pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-16 md:gap-12 items-center">
+          <ScrollReveal>
+            <div className="max-w-2xl">
+              <p className="font-body text-accent text-xs tracking-[0.3em] uppercase mb-4">{t(lang, 'contact.tag')}</p>
+              <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground leading-tight whitespace-pre-line">
+                {t(lang, 'contact.title')}
+              </h1>
+              <div className="w-16 h-[2px] bg-accent my-6" />
+              <p className="font-body text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg">{t(lang, 'contact.desc')}</p>
+            </div>
+          </ScrollReveal>
 
-        <div className="grid lg:grid-cols-5 gap-16 mt-16 md:mt-24">
+          <ScrollReveal delay={0.15}>
+            <div className="relative mx-auto max-w-xs sm:max-w-sm md:max-w-none">
+              <div className="absolute -inset-4 md:-inset-6 border-2 border-accent/30 rounded-lg -rotate-3" aria-hidden="true" />
+              <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-accent/10 rounded-full blur-3xl" aria-hidden="true" />
+              <div className="relative rounded-lg overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                <img
+                  src="/contact-paris.jpg"
+                  alt="Megan & Imaan à Paris"
+                  className="w-full aspect-[4/5] object-cover object-top"
+                />
+              </div>
+              <span className="absolute -bottom-4 left-6 bg-accent text-accent-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-sm shadow-lg">
+                Paris, France
+              </span>
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-20 md:py-28">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-16">
           <ScrollReveal className="lg:col-span-3" delay={0.1}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-accent/20 rounded-lg p-6 md:p-10 shadow-xl">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.name')}</label>
-                  <Input required placeholder={t(lang, 'contact.nameph')} className="bg-card border-border font-body h-12" />
+                  <Input required value={form.name} onChange={updateField('name')} placeholder={t(lang, 'contact.nameph')} className="bg-background border-border font-body h-12" />
                 </div>
                 <div>
                   <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.email')}</label>
-                  <Input required type="email" placeholder="hello@lesgawas.com" className="bg-card border-border font-body h-12" />
+                  <Input required type="email" value={form.email} onChange={updateField('email')} placeholder="hello@lesgawas.com" className="bg-background border-border font-body h-12" />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.company')}</label>
-                  <Input placeholder={t(lang, 'contact.companph')} className="bg-card border-border font-body h-12" />
+                  <Input value={form.company} onChange={updateField('company')} placeholder={t(lang, 'contact.companph')} className="bg-background border-border font-body h-12" />
                 </div>
                 <div>
                   <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.type')}</label>
-                  <Select>
-                    <SelectTrigger className="bg-card border-border font-body h-12">
+                  <Select value={form.type} onValueChange={(v) => setForm((f) => ({ ...f, type: v }))}>
+                    <SelectTrigger className="bg-background border-border font-body h-12">
                       <SelectValue placeholder={t(lang, 'contact.select')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -77,7 +129,7 @@ export default function Contact() {
               </div>
               <div>
                 <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.message')}</label>
-                <Textarea required rows={6} placeholder={t(lang, 'contact.messageph')} className="bg-card border-border font-body resize-none" />
+                <Textarea required rows={6} value={form.message} onChange={updateField('message')} placeholder={t(lang, 'contact.messageph')} className="bg-background border-border font-body resize-none" />
               </div>
               <Button
                 type="submit"
@@ -100,36 +152,40 @@ export default function Contact() {
           </ScrollReveal>
 
           <ScrollReveal className="lg:col-span-2" delay={0.2}>
-            <div className="space-y-10">
+            <div className="space-y-10 bg-card border border-accent/20 rounded-lg p-6 md:p-10 shadow-xl h-full">
               <div>
-                <h3 className="font-display text-lg text-foreground mb-4">{t(lang, 'contact.info')}</h3>
+                <h3 className="font-display text-lg text-foreground">{t(lang, 'contact.info')}</h3>
+                <div className="w-8 h-[2px] bg-accent mt-2 mb-5" />
                 <div className="space-y-4">
                   <a href="mailto:contact@lesgawas.com" className="flex items-center gap-3 font-body text-sm text-muted-foreground hover:text-accent transition-colors">
-                    <Mail size={16} className="text-accent" />
+                    <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                      <Mail size={14} className="text-accent" />
+                    </span>
                     contact@lesgawas.com
                   </a>
                   <div className="flex items-center gap-3 font-body text-sm text-muted-foreground">
-                    <MapPin size={16} className="text-accent" />
+                    <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+                      <MapPin size={14} className="text-accent" />
+                    </span>
                     Internationale
                   </div>
                 </div>
               </div>
               <div className="h-px bg-border" />
               <div>
-                <h3 className="font-display text-lg text-foreground mb-4">{t(lang, 'contact.socials')}</h3>
+                <h3 className="font-display text-lg text-foreground">{t(lang, 'contact.socials')}</h3>
+                <div className="w-8 h-[2px] bg-accent mt-2 mb-5" />
                 <div className="space-y-4">
                   {socials.map((s) => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-body text-sm text-muted-foreground hover:text-accent transition-colors group">
-                      <s.icon size={16} className="text-accent/60 group-hover:text-accent transition-colors" />
+                      <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/20 transition-colors">
+                        <s.icon size={14} className="text-accent" />
+                      </span>
                       <span>{s.label}</span>
                       <span className="text-muted-foreground/40 ml-auto">{s.handle}</span>
                     </a>
                   ))}
                 </div>
-              </div>
-              <div className="h-px bg-border" />
-              <div>
-                
               </div>
             </div>
           </ScrollReveal>

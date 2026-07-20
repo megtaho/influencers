@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import { PaparazziFlashes, Barcode } from '../components/MagazineHero';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
+const HERO_IMG = '/IMG_4661.jpg';
 const logo = (domain) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
 const COLLECTIONS = {
@@ -109,10 +110,6 @@ const COLLECTIONS = {
 export default function Gallery() {
   const lang = useLanguage();
   const [filter, setFilter] = useState('All');
-  const scrollRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: scrollRef, offset: ['start start', 'end start'] });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 80]);
 
   const categories = [
     { key: 'All', label: t(lang, 'gallery.all') },
@@ -123,16 +120,41 @@ export default function Gallery() {
 
   const activeCategories = filter === 'All' ? Object.keys(COLLECTIONS) : [filter];
 
+  const brands = ['Octopied Mind', 'Ohmu', 'Her app', 'Trip.com', 'Violette&co', 'Garnier', 'Tiktok', 'Soundgame', 'Wanderlog', 'Mac Cosmetics'];
+
   return (
-    <div ref={scrollRef} className="bg-background min-h-screen">
-      <motion.div
-        style={{ opacity: heroOpacity, y: heroY }}
-        className="h-[50vh] md:h-[60vh] flex flex-col items-center justify-center px-6"
-      >
-        <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">{t(lang, 'gallery.tag')}</p>
-        <h1 className="font-display text-4xl md:text-7xl lg:text-8xl text-foreground text-center">{t(lang, 'gallery.title')}</h1>
-        <p className="font-body text-muted-foreground text-sm mt-6 max-w-md text-center leading-relaxed">{t(lang, 'gallery.desc')}</p>
-      </motion.div>
+    <div className="bg-background min-h-screen">
+      <div className="relative h-[90vh] md:h-screen overflow-hidden bg-black">
+        <img src={HERO_IMG} alt="Les Gawas" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/50" />
+        <PaparazziFlashes />
+
+        <div className="relative z-10 h-full flex flex-col px-6 md:px-14 py-8 md:py-12">
+          <div className="flex items-start justify-between">
+            <span className="font-body text-[10px] md:text-xs tracking-[0.3em] uppercase text-white bg-accent px-3 py-1 mt-16 md:mt-20">
+              {t(lang, 'gallery.tag')}
+            </span>
+            <p className="font-body text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 text-right">
+              {lang === 'fr' ? 'Édition' : 'Issue'} N°01 — 2026
+            </p>
+          </div>
+
+          <div className="flex-1 flex flex-col items-center justify-center text-center">
+            <h1 className="font-display text-6xl sm:text-7xl md:text-9xl text-white tracking-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+              LES GAWAS
+            </h1>
+            <div className="w-24 h-[2px] bg-accent my-4 md:my-6" />
+            <p className="font-body text-white/80 text-sm md:text-base max-w-md leading-relaxed">
+              {t(lang, 'gallery.desc')}
+            </p>
+          </div>
+
+          <div className="flex items-end justify-between">
+            <p className="font-body text-white/70 text-xs md:text-sm">Les Gawas · Megan & Imaan</p>
+            <Barcode label="GALERIE · 2026" />
+          </div>
+        </div>
+      </div>
 
       <div className="sticky top-16 md:top-20 z-30 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-4 flex gap-6 overflow-x-auto">
@@ -155,6 +177,31 @@ export default function Gallery() {
           <CategoryBlock key={catKey} name={catKey} lang={lang} collections={COLLECTIONS[catKey]} />
         ))}
       </div>
+
+      <section className="bg-card py-20 md:py-32">
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
+          <ScrollReveal>
+            <p className="font-body text-accent text-xs tracking-[0.3em] uppercase mb-2">{t(lang, 'media.brands.tag')}</p>
+            <h2 className="font-display text-3xl md:text-5xl text-foreground mb-12">{t(lang, 'media.brands.title')}</h2>
+          </ScrollReveal>
+          <div className="flex flex-wrap gap-x-10 gap-y-6 justify-center items-center">
+            {brands.map((b, i) => (
+              <ScrollReveal key={b} delay={i * 0.03}>
+                <span className="font-display text-lg md:text-xl text-muted-foreground/40 hover:text-foreground/80 transition-colors duration-300 cursor-default">{b}</span>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-40 text-center px-6">
+        <ScrollReveal>
+          <h2 className="font-display text-3xl md:text-5xl text-foreground">{t(lang, 'media.cta')}</h2>
+          <a href="/contact" className="inline-block mt-8 px-10 py-4 bg-accent text-accent-foreground font-body text-sm tracking-[0.2em] uppercase rounded-sm hover:bg-accent/90 transition-colors">
+            {t(lang, 'media.ctabtn')}
+          </a>
+        </ScrollReveal>
+      </section>
     </div>
   );
 }

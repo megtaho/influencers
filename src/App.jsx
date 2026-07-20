@@ -10,7 +10,6 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Journey from './pages/Journey';
 import Gallery from './pages/Gallery';
-import MediaKit from './pages/MediaKit';
 import Resources from './pages/Resources';
 import Drop from './pages/Drop';
 import Contact from './pages/Contact';
@@ -45,7 +44,6 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/journey" element={<Journey />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/media-kit" element={<MediaKit />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/drop" element={<Drop />} />
         <Route path="/contact" element={<Contact />} />
