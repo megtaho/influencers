@@ -113,6 +113,27 @@
   }
 }
 
+.heart-rainbow-bg {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #ff0000 0 14.28%,
+    #ff8c00 0 28.56%,
+    #ffee00 0 42.84%,
+    #00c853 0 57.12%,
+    #00b0ff 0 71.4%,
+    #7c4dff 0 85.68%,
+    #ff0000 0 100%
+  );
+  background-size: 200% 200%;
+  animation: heart-rainbow-shift 6s linear infinite;
+}
+
+@keyframes heart-rainbow-shift {
+  to {
+    background-position: 200% center;
+  }
+}
+
 .gallery-arrow {
   background-image: linear-gradient(90deg, #ff0000, #ff8c00, #ffee00, #00c853, #00b0ff, #7c4dff, #ff0000);
   background-size: 250% auto;
