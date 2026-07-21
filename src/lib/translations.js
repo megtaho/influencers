@@ -173,5 +173,5 @@ const translations = {
   'contact.nameph': { fr: 'Votre nom', en: 'Your name' },
   'contact.companph': { fr: 'Nom de votre marque', en: 'Your brand name' },
   'contact.messageph': { fr: 'Décrivez votre projet, vos objectifs, et le budget envisagé...', en: 'Describe your project, goals, and estimated budget...' },
-  'contact.footer': { fr: '© 2026 Les Gawas. Tous droits réservés.', en: '© 2026 Les Gawas. All rights reserved.' },
+  'contact.footer': { fr: '© 2026 Megan Les Gawas. Tous droits réservés.', en: '© 2026 Megan Les Gawas. All rights reserved.' },
 };
