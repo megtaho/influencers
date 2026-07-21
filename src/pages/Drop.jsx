@@ -36,7 +36,7 @@ const PRODUCTS = [
   {
     id: 3,
     name: { fr: 'Mug Céramique Artisanal', en: 'Artisan Ceramic Mug' },
-    category: 'Objets 3D',
+    category: 'Céramique Artisanale',
     price: '42€',
     image: 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/709bacb8d_generated_image.png',
     badge: null,
@@ -78,7 +78,7 @@ const PRODUCTS = [
   {
     id: 6,
     name: { fr: 'Set Céramique Imaan', en: "Imaan's Ceramic Set" },
-    category: 'Objets 3D',
+    category: 'Céramique Artisanale',
     price: '120€',
     image: 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/0f67cdb42_generated_image.png',
     badge: { fr: 'Artisanal', en: 'Handmade' },
@@ -89,15 +89,30 @@ const PRODUCTS = [
     colors: ['Terracotta / Crème'],
     sizes: null,
   },
+  {
+    id: 7,
+    name: { fr: 'Vase Fait Main par Imaan', en: 'Handmade Vase by Imaan' },
+    category: 'Céramique Artisanale',
+    price: '72€',
+    image: '/vase-imaan.jpg',
+    detailImage: '/vase-imaan-detail.jpg',
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: 'Vase en céramique façonné à la main par Imaan, à la texture alvéolée et aux tons crème naturels. Chaque pièce est unique.',
+      en: 'Ceramic vase handcrafted by Imaan, with a honeycomb texture and natural cream tones. Each piece is unique.',
+    },
+    colors: ['Crème'],
+    sizes: null,
+  },
 ];
 
 const CATEGORIES = {
-  fr: ['Tout', 'Vêtements', 'Accessoires', 'Objets 3D'],
-  en: ['All', 'Clothing', 'Accessories', '3D Objects'],
+  fr: ['Tout', 'Vêtements', 'Accessoires', 'Objets 3D', 'Céramique Artisanale'],
+  en: ['All', 'Clothing', 'Accessories', '3D Objects', 'Handmade Ceramics'],
 };
 
-const CAT_MAP = { 'Tout': 'All', 'All': 'All', 'Vêtements': 'Clothing', 'Clothing': 'Clothing', 'Accessoires': 'Accessories', 'Accessories': 'Accessories', 'Objets 3D': '3D Objects', '3D Objects': '3D Objects' };
-const CAT_FILTER_MAP = { 'All': null, 'Clothing': 'Vêtements', 'Accessories': 'Accessoires', '3D Objects': 'Objets 3D' };
+const CAT_MAP = { 'Tout': 'All', 'All': 'All', 'Vêtements': 'Clothing', 'Clothing': 'Clothing', 'Accessoires': 'Accessories', 'Accessories': 'Accessories', 'Objets 3D': '3D Objects', '3D Objects': '3D Objects', 'Céramique Artisanale': 'Handmade Ceramics', 'Handmade Ceramics': 'Handmade Ceramics' };
+const CAT_FILTER_MAP = { 'All': null, 'Clothing': 'Vêtements', 'Accessories': 'Accessoires', '3D Objects': 'Objets 3D', 'Handmade Ceramics': 'Céramique Artisanale' };
 
 export default function Drop() {
   const lang = useLanguage();
@@ -265,7 +280,7 @@ function ProductModal({ product, lang, onClose, onAdd, addedId }) {
       >
         <div className="grid md:grid-cols-2">
           <div className="aspect-square md:aspect-auto md:h-full min-h-[280px] bg-muted">
-            <img src={product.image} alt={product.name[lang]} className="w-full h-full object-cover" />
+            <img src={product.detailImage || product.image} alt={product.name[lang]} className="w-full h-full object-cover" />
           </div>
           <div className="p-8 flex flex-col">
             <div className="flex justify-between items-start">
