@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, X } from 'lucide-react';
+import { ShoppingBag, X, Mail } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useLanguage } from '../lib/useLanguage';
 
@@ -34,20 +34,6 @@ const PRODUCTS = [
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
   },
   {
-    id: 3,
-    name: { fr: 'Mug Céramique Artisanal', en: 'Artisan Ceramic Mug' },
-    category: 'Céramique Artisanale',
-    price: '42€',
-    image: 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/709bacb8d_generated_image.png',
-    badge: null,
-    desc: {
-      fr: 'Mug en céramique fait à la main par Imaan. Logo gravé, tons chauds. Chaque pièce est unique.',
-      en: 'Handcrafted ceramic mug by Imaan. Engraved logo, warm tones. Each piece is unique.',
-    },
-    colors: ['Terracotta', 'Crème', 'Gris cendre'],
-    sizes: null,
-  },
-  {
     id: 4,
     name: { fr: 'Sculpture 3D Love Symbol', en: '3D Love Symbol Sculpture' },
     category: 'Objets 3D',
@@ -76,32 +62,227 @@ const PRODUCTS = [
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
   },
   {
-    id: 6,
-    name: { fr: 'Set Céramique Imaan', en: "Imaan's Ceramic Set" },
-    category: 'Céramique Artisanale',
-    price: '120€',
-    image: 'https://media.base44.com/images/public/69cfbcba1181dce806686de0/0f67cdb42_generated_image.png',
-    badge: { fr: 'Artisanal', en: 'Handmade' },
-    desc: {
-      fr: "Set de 3 bols et 1 assiette en céramique artisanale créés par Imaan. Motif vague exclusif, tons terracotta et crème.",
-      en: "Set of 3 bowls and 1 artisan ceramic plate created by Imaan. Exclusive wave pattern, terracotta and cream tones.",
-    },
-    colors: ['Terracotta / Crème'],
-    sizes: null,
-  },
-  {
     id: 7,
     name: { fr: 'Vase Fait Main par Imaan', en: 'Handmade Vase by Imaan' },
     category: 'Céramique Artisanale',
-    price: '72€',
+    price: '',
     image: '/vase-imaan.jpg',
     detailImage: '/vase-imaan-detail.jpg',
+    images: ['/vase-imaan-detail.jpg', '/vase-imaan-2.jpg', '/vase-imaan-3.jpg', '/vase-imaan-4.jpg', '/vase-imaan-5.jpg'],
     badge: { fr: 'Artisanal', en: 'Handmade' },
     desc: {
       fr: 'Vase en céramique façonné à la main par Imaan, à la texture alvéolée et aux tons crème naturels. Chaque pièce est unique.',
       en: 'Ceramic vase handcrafted by Imaan, with a honeycomb texture and natural cream tones. Each piece is unique.',
     },
     colors: ['Crème'],
+    sizes: null,
+  },
+  {
+    id: 8,
+    name: { fr: 'Trio de Mugs Personnalisés', en: 'Set of 3 Personalized Mugs' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-mugs-personnalises-1.jpg',
+    detailImage: '/ceramics-mugs-personnalises-1.jpg',
+    images: ['/ceramics-mugs-personnalises-1.jpg', '/ceramics-mugs-personnalises-2.jpg', '/ceramics-mugs-personnalises-3.jpg', '/ceramics-mugs-personnalises-4.jpg', '/ceramics-mugs-personnalises-5.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: "Trio de mugs en céramique façonnés et gravés à la main, liseré bleu. Prénoms ou mots doux personnalisables — comme \"Nathalie Ange\", \"Laurine Mégane\" ou \"Madeleine\" en exemple. Chaque pièce est unique.",
+      en: 'Set of three handcrafted ceramic mugs with a hand-painted blue rim. Names or sweet words can be personalized — shown here as "Nathalie Ange", "Laurine Mégane" and "Madeleine". Each piece is unique.',
+    },
+    colors: ['Crème / Bleu'],
+    sizes: null,
+  },
+  {
+    id: 9,
+    name: { fr: 'Vase Rouge "In Love"', en: 'Red "In Love" Vase' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-vase-love-1.jpg',
+    detailImage: '/ceramics-vase-love-1.jpg',
+    images: ['/ceramics-vase-love-1.jpg', '/ceramics-vase-love-2.jpg', '/ceramics-vase-love-3.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Vase en céramique rouge façonné à la main, inscription "Les Gawas in Love" peinte à la main. Parfait pour sublimer un bouquet.',
+      en: 'Handcrafted red ceramic vase with a hand-painted "Les Gawas in Love" inscription. Perfect for showing off a bouquet.',
+    },
+    colors: ['Rouge'],
+    sizes: null,
+  },
+  {
+    id: 10,
+    name: { fr: 'Set Ombré Soleil', en: 'Sunset Ombré Set' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-set-soleil-1.jpg',
+    detailImage: '/ceramics-set-soleil-1.jpg',
+    images: ['/ceramics-set-soleil-1.jpg', '/ceramics-set-soleil-2.jpg', '/ceramics-set-soleil-3.jpg', '/ceramics-set-soleil-4.jpg', '/ceramics-set-soleil-5.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: "Set de 3 pièces (bol, mug, tasse) en céramique façonnées à la main, dégradé jaune soleil vers terracotta. Chaque pièce est unique.",
+      en: 'Set of 3 handcrafted ceramic pieces (bowl, mug, cup) with a sunny yellow-to-terracotta ombré glaze. Each piece is unique.',
+    },
+    colors: ['Dégradé Soleil'],
+    sizes: null,
+  },
+  {
+    id: 11,
+    name: { fr: 'Trio Ombré Corail', en: 'Coral Ombré Trio' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-chandelier-1.jpg',
+    detailImage: '/ceramics-chandelier-1.jpg',
+    images: ['/ceramics-chandelier-1.jpg', '/ceramics-chandelier-2.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: 'Trio en céramique façonné à la main (1 bol, 2 tasses) au dégradé corail, rose et bleu pastel. Chaque pièce est unique.',
+      en: 'Handcrafted ceramic trio (1 bowl, 2 cups) with a coral, pink and pastel-blue ombré glaze. Each piece is unique.',
+    },
+    colors: ['Dégradé Corail'],
+    sizes: null,
+  },
+  {
+    id: 12,
+    name: { fr: 'Collection Bleu Nuit', en: 'Midnight Blue Collection' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-set-bleu-nuit-1.jpg',
+    detailImage: '/ceramics-set-bleu-nuit-1.jpg',
+    images: ['/ceramics-set-bleu-nuit-1.jpg', '/ceramics-set-bleu-nuit-2.jpg', '/ceramics-set-bleu-nuit-3.jpg', '/ceramics-set-bleu-nuit-4.jpg', '/ceramics-set-bleu-nuit-5.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: 'Collection de 5 pièces en céramique bleu nuit strié (coupelle verseuse, bol facetté, jarre côtelée, mug, vase boule), façonnées à la main. Chaque pièce est unique.',
+      en: 'Collection of 5 handcrafted midnight-blue ceramic pieces (pouring bowl, faceted bowl, ribbed jar, mug, round vase). Each piece is unique.',
+    },
+    colors: ['Bleu Nuit'],
+    sizes: null,
+  },
+  {
+    id: 13,
+    name: { fr: 'Mug Bronze Strié', en: 'Ribbed Bronze Mug' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-mug-bronze-1.jpg',
+    detailImage: '/ceramics-mug-bronze-1.jpg',
+    images: ['/ceramics-mug-bronze-1.jpg', '/ceramics-mug-bronze-2.jpg', '/ceramics-mug-bronze-3.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Mug en céramique côtelé à l\'émail bronze/olive, façonné à la main. Une pièce unique.',
+      en: 'Ribbed ceramic mug with a bronze-olive glaze, handcrafted. A one-of-a-kind piece.',
+    },
+    colors: ['Bronze'],
+    sizes: null,
+  },
+  {
+    id: 14,
+    name: { fr: 'Coupelle Verseuse Bleu Nuit', en: 'Midnight Blue Pouring Bowl' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-bol-anses-1.jpg',
+    detailImage: '/ceramics-bol-anses-1.jpg',
+    images: ['/ceramics-bol-anses-1.jpg', '/ceramics-bol-anses-2.jpg', '/ceramics-bol-anses-3.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Petite coupelle verseuse en céramique bleu nuit avec anses, façonnée à la main. Idéale pour une sauce ou une vinaigrette.',
+      en: 'Small midnight-blue ceramic pouring bowl with handles, handcrafted. Perfect for sauces or dressings.',
+    },
+    colors: ['Bleu Nuit'],
+    sizes: null,
+  },
+  {
+    id: 15,
+    name: { fr: 'Boîte Céramique Peinte', en: 'Painted Ceramic Box' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-boite-peinte-1.jpg',
+    detailImage: '/ceramics-boite-peinte-1.jpg',
+    images: ['/ceramics-boite-peinte-1.jpg', '/ceramics-boite-peinte-2.jpg', '/ceramics-boite-peinte-3.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Boîte en céramique noir et blanc, couvercle peint à la main à motif pinceau, avec deux bols nichés à l\'intérieur. Pièce unique.',
+      en: 'Black and white ceramic box with a hand-painted brushstroke lid, with two nested bowls inside. A one-of-a-kind piece.',
+    },
+    colors: ['Noir / Blanc'],
+    sizes: null,
+  },
+  {
+    id: 16,
+    name: { fr: 'Bol Imprimé Pêche', en: 'Peach Print Bowl' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-peche-1.jpg',
+    detailImage: '/ceramics-peche-1.jpg',
+    images: ['/ceramics-peche-1.jpg', '/ceramics-peche-2.jpg', '/ceramics-peche-3.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Bol en céramique terracotta à motif pêche peint à la main, intérieur crème, façonné à la main. Une pièce unique.',
+      en: 'Terracotta ceramic bowl with a hand-painted peach print and cream interior, handcrafted. A one-of-a-kind piece.',
+    },
+    colors: ['Terracotta / Pêche'],
+    sizes: null,
+  },
+  {
+    id: 17,
+    name: { fr: 'Set Terracotta Brut', en: 'Raw Terracotta Set' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-set-terracotta-2.jpg',
+    detailImage: '/ceramics-set-terracotta-2.jpg',
+    images: ['/ceramics-set-terracotta-2.jpg', '/ceramics-set-terracotta-1.jpg', '/ceramics-set-terracotta-3.jpg', '/ceramics-set-terracotta-4.jpg', '/ceramics-set-terracotta-5.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: 'Bol et tasse en terracotta brute émaillée, façonnés à la main, esthétique naturelle et minimale. Chaque pièce est unique.',
+      en: 'Bowl and cup in glazed raw terracotta, handcrafted with a natural, minimal look. Each piece is unique.',
+    },
+    colors: ['Terracotta'],
+    sizes: null,
+  },
+  {
+    id: 18,
+    name: { fr: 'Duo Presse-Agrumes Bleu Marbré', en: 'Marbled Blue Citrus Juicer Duo' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-presse-agrumes-1.jpg',
+    detailImage: '/ceramics-presse-agrumes-1.jpg',
+    images: ['/ceramics-presse-agrumes-1.jpg', '/ceramics-presse-agrumes-2.jpg', '/ceramics-presse-agrumes-3.jpg', '/ceramics-presse-agrumes-4.jpg'],
+    badge: { fr: 'Artisanal', en: 'Handmade' },
+    desc: {
+      fr: 'Duo de presse-agrumes en céramique à l\'émail bleu marbré, façonnés à la main. Aussi beaux qu\'utiles sur une table.',
+      en: 'Pair of ceramic citrus juicers with a marbled blue glaze, handcrafted. As beautiful as they are useful on a table.',
+    },
+    colors: ['Bleu Marbré'],
+    sizes: null,
+  },
+  {
+    id: 19,
+    name: { fr: 'Duo de Mugs Visage Sculptés', en: 'Sculpted Face Mug Duo' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-mugs-visage-1.jpg',
+    detailImage: '/ceramics-mugs-visage-1.jpg',
+    images: ['/ceramics-mugs-visage-1.jpg', '/ceramics-mugs-visage-2.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: "Duo de mugs sculptés à la main en forme de visage, l'un en grès brut à anses torsadées, l'autre en émail ivoire. Pièces uniques et sculpturales.",
+      en: 'A pair of hand-sculpted face mugs, one in raw stoneware with twisted handles, one in ivory glaze. Unique, sculptural pieces.',
+    },
+    colors: ['Grès Brut / Ivoire'],
+    sizes: null,
+  },
+  {
+    id: 20,
+    name: { fr: 'Collection Tasses Pièces Uniques', en: 'One-of-a-Kind Cup Collection' },
+    category: 'Céramique Artisanale',
+    price: '',
+    image: '/ceramics-collection-unique-1.jpg',
+    detailImage: '/ceramics-collection-unique-1.jpg',
+    images: ['/ceramics-collection-unique-1.jpg', '/ceramics-collection-unique-2.jpg', '/ceramics-collection-unique-3.jpg', '/ceramics-collection-unique-4.jpg', '/ceramics-collection-unique-5.jpg', '/ceramics-collection-unique-6.jpg'],
+    badge: { fr: 'Pièce Unique', en: 'One of a Kind' },
+    desc: {
+      fr: 'Petites tasses en céramique façonnées à la main, chacune avec son propre glaçage et motif. Sélectionnez un coloris, chaque tasse est un exemplaire unique et le stock est limité.',
+      en: 'Small handcrafted ceramic cups, each with its own glaze and pattern. Pick a colorway — every cup is a one-of-a-kind piece and stock is limited.',
+    },
+    colors: ['Calligraphie Bleue', 'Vert Émeraude Strié', 'Trio Pois Colorés', 'Duo Ivoire / Terracotta', 'Vert Céladon Coulures', 'Rose Poudré'],
     sizes: null,
   },
 ];
@@ -113,6 +294,16 @@ const CATEGORIES = {
 
 const CAT_MAP = { 'Tout': 'All', 'All': 'All', 'Vêtements': 'Clothing', 'Clothing': 'Clothing', 'Accessoires': 'Accessories', 'Accessories': 'Accessories', 'Objets 3D': '3D Objects', '3D Objects': '3D Objects', 'Céramique Artisanale': 'Handmade Ceramics', 'Handmade Ceramics': 'Handmade Ceramics' };
 const CAT_FILTER_MAP = { 'All': null, 'Clothing': 'Vêtements', 'Accessories': 'Accessoires', '3D Objects': 'Objets 3D', 'Handmade Ceramics': 'Céramique Artisanale' };
+
+function ceramicsMailto(product, lang) {
+  const subject = lang === 'fr'
+    ? `Demande de prix / personnalisation — ${product.name.fr}`
+    : `Price request / customization — ${product.name.en}`;
+  const body = lang === 'fr'
+    ? `Bonjour, je suis intéressé·e par la pièce "${product.name.fr}" (Handmade Ceramics). Pouvez-vous me donner le prix et/ou les options de personnalisation ?`
+    : `Hi, I'm interested in the "${product.name.en}" piece (Handmade Ceramics). Could you tell me the price and/or the customization options?`;
+  return `mailto:contact@lesgawas.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export default function Drop() {
   const lang = useLanguage();
@@ -213,19 +404,30 @@ export default function Drop() {
                   <h3 className="font-display text-lg text-foreground mt-1">{product.name[lang]}</h3>
                   <div className="flex items-center justify-between mt-auto pt-4">
                     <span className="font-display text-xl text-foreground">{product.price}</span>
-                    <button
-                      onClick={() => handleAdd(product.id)}
-                      className={`flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase px-4 py-2.5 rounded-sm transition-all duration-300 ${
-                        addedId === product.id
-                          ? 'bg-green-500 text-white'
-                          : 'bg-foreground text-background hover:bg-accent'
-                      }`}
-                    >
-                      <ShoppingBag size={13} />
-                      {addedId === product.id
-                        ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓')
-                        : (lang === 'fr' ? 'Ajouter' : 'Add')}
-                    </button>
+                    {product.category === 'Céramique Artisanale' ? (
+                      <a
+                        href={ceramicsMailto(product, lang)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase px-4 py-2.5 rounded-sm transition-all duration-300 bg-foreground text-background hover:bg-accent"
+                      >
+                        <Mail size={13} />
+                        {lang === 'fr' ? 'Nous écrire' : 'Email us'}
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => handleAdd(product.id)}
+                        className={`flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase px-4 py-2.5 rounded-sm transition-all duration-300 ${
+                          addedId === product.id
+                            ? 'bg-green-500 text-white'
+                            : 'bg-foreground text-background hover:bg-accent'
+                        }`}
+                      >
+                        <ShoppingBag size={13} />
+                        {addedId === product.id
+                          ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓')
+                          : (lang === 'fr' ? 'Ajouter' : 'Add')}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -246,6 +448,7 @@ export default function Drop() {
       <AnimatePresence>
         {selectedProduct && (
           <ProductModal
+            key={selectedProduct.id}
             product={selectedProduct}
             lang={lang}
             onClose={() => setSelectedProduct(null)}
@@ -261,6 +464,8 @@ export default function Drop() {
 function ProductModal({ product, lang, onClose, onAdd, addedId }) {
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const gallery = product.images && product.images.length ? product.images : [product.detailImage || product.image];
 
   return (
     <motion.div
@@ -279,8 +484,25 @@ function ProductModal({ product, lang, onClose, onAdd, addedId }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="grid md:grid-cols-2">
-          <div className="aspect-square md:aspect-auto md:h-full min-h-[280px] bg-muted">
-            <img src={product.detailImage || product.image} alt={product.name[lang]} className="w-full h-full object-cover" />
+          <div className="flex flex-col md:h-full min-h-[280px] bg-muted">
+            <div className="flex-1 aspect-square md:aspect-auto overflow-hidden">
+              <img src={gallery[selectedImage]} alt={product.name[lang]} className="w-full h-full object-cover" />
+            </div>
+            {gallery.length > 1 && (
+              <div className="flex gap-2 p-3 overflow-x-auto shrink-0">
+                {gallery.map((src, i) => (
+                  <button
+                    key={src}
+                    onClick={() => setSelectedImage(i)}
+                    className={`shrink-0 w-14 h-14 rounded-sm overflow-hidden border-2 transition-colors ${
+                      selectedImage === i ? 'border-accent' : 'border-transparent opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={src} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <div className="p-8 flex flex-col">
             <div className="flex justify-between items-start">
@@ -345,19 +567,29 @@ function ProductModal({ product, lang, onClose, onAdd, addedId }) {
 
             <div className="mt-auto pt-8 flex items-center justify-between">
               <span className="font-display text-3xl text-foreground">{product.price}</span>
-              <button
-                onClick={onAdd}
-                className={`flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-3 rounded-sm transition-all duration-300 ${
-                  addedId === product.id
-                    ? 'bg-green-500 text-white'
-                    : 'bg-foreground text-background hover:bg-accent'
-                }`}
-              >
-                <ShoppingBag size={15} />
-                {addedId === product.id
-                  ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓')
-                  : (lang === 'fr' ? 'Ajouter au panier' : 'Add to cart')}
-              </button>
+              {product.category === 'Céramique Artisanale' ? (
+                <a
+                  href={ceramicsMailto(product, lang)}
+                  className="flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-3 rounded-sm transition-all duration-300 bg-foreground text-background hover:bg-accent"
+                >
+                  <Mail size={15} />
+                  {lang === 'fr' ? 'Demander le prix' : 'Ask for price'}
+                </a>
+              ) : (
+                <button
+                  onClick={onAdd}
+                  className={`flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-3 rounded-sm transition-all duration-300 ${
+                    addedId === product.id
+                      ? 'bg-green-500 text-white'
+                      : 'bg-foreground text-background hover:bg-accent'
+                  }`}
+                >
+                  <ShoppingBag size={15} />
+                  {addedId === product.id
+                    ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓')
+                    : (lang === 'fr' ? 'Ajouter au panier' : 'Add to cart')}
+                </button>
+              )}
             </div>
           </div>
         </div>

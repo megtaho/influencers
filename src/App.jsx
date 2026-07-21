@@ -11,7 +11,6 @@ import Home from './pages/Home';
 import Journey from './pages/Journey';
 import Gallery from './pages/Gallery';
 import Resources from './pages/Resources';
-import Drop from './pages/Drop';
 import Contact from './pages/Contact';
 
 const AuthenticatedApp = () => {
@@ -45,7 +44,6 @@ const AuthenticatedApp = () => {
         <Route path="/journey" element={<Journey />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/resources" element={<Resources />} />
-        <Route path="/drop" element={<Drop />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
