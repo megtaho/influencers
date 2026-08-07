@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ParallaxSection from '../components/ParallaxSection';
 import ScrollReveal from '../components/ScrollReveal';
@@ -118,9 +119,9 @@ export default function Journey() {
           <h2 className="font-display text-3xl md:text-5xl text-foreground">
             {lang === 'fr' ? <>Explorez nos <span className="text-accent">collaborations</span></> : <>Explore our <span className="text-accent">collaborations</span></>}
           </h2>
-          <a href="/gallery" className="inline-block mt-8 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-accent transition-colors group">
+          <Link to="/gallery" className="inline-block mt-8 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-accent transition-colors group">
             {lang === 'fr' ? 'Voir les collaborations' : 'See collaborations'} <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
-          </a>
+          </Link>
         </ScrollReveal>
       </section>
     </div>

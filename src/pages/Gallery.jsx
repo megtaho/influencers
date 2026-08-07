@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { PaparazziFlashes, Barcode } from '../components/MagazineHero';
@@ -197,9 +198,9 @@ export default function Gallery() {
       <section className="py-24 md:py-40 text-center px-6">
         <ScrollReveal>
           <h2 className="font-display text-3xl md:text-5xl text-foreground">{t(lang, 'media.cta')}</h2>
-          <a href="/contact" className="inline-block mt-8 px-10 py-4 bg-accent text-accent-foreground font-body text-sm tracking-[0.2em] uppercase rounded-sm hover:bg-accent/90 transition-colors">
+          <Link to="/contact" className="inline-block mt-8 px-10 py-4 bg-accent text-accent-foreground font-body text-sm tracking-[0.2em] uppercase rounded-sm hover:bg-accent/90 transition-colors">
             {t(lang, 'media.ctabtn')}
-          </a>
+          </Link>
         </ScrollReveal>
       </section>
     </div>
