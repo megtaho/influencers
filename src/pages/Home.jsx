@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ChevronDown, Instagram, Youtube } from 'lucide-react';
 import VideoScrubber from '../components/VideoScrubber';
 import ScrollReveal from '../components/ScrollReveal';
+import Book3D from '../components/Book3D';
 import { useLanguage } from '../lib/useLanguage';
 import { t } from '../lib/translations';
 
@@ -80,29 +81,36 @@ export default function Home() {
         </motion.div>
       </div>
 
-      <section className="relative z-20 bg-background">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-40">
-          <ScrollReveal>
-            <p className="font-body text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4">{t(lang, 'home.universe')}</p>
-            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl text-foreground leading-tight whitespace-pre-line">
+      <section className="relative z-20 bg-background overflow-hidden">
+        {/* Soft aurora glow */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-accent/20 blur-[120px] animate-blob" />
+          <div className="absolute top-[30%] -right-40 w-[480px] h-[480px] rounded-full bg-[#9B30D9]/10 blur-[120px] animate-blob [animation-delay:-6s]" />
+          <div className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-[#0072FF]/10 blur-[120px] animate-blob [animation-delay:-12s]" />
+          <div className="absolute inset-0 bg-grain opacity-[0.04] mix-blend-multiply" />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto px-4 md:px-10 py-24 md:py-32">
+          <ScrollReveal className="text-center">
+            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground leading-[1.05] tracking-tight">
               {t(lang, 'home.story').split('\n')[0]}<br />
-              <span className="text-accent">{t(lang, 'home.story').split('\n')[1]}</span>
+              <span className="italic bg-gradient-to-r from-accent via-[#e0567a] to-[#9B30D9] bg-clip-text text-transparent">
+                {t(lang, 'home.story').split('\n')[1]}
+              </span>
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-8 mt-16 md:mt-24">
-            <ChapterCard number="01" title={t(lang, 'home.ch1.title')} description={t(lang, 'home.ch1.desc')} delay={0} />
-            <ChapterCard number="02" title={t(lang, 'home.ch2.title')} description={t(lang, 'home.ch2.desc')} delay={0.15} />
-            <ChapterCard number="03" title={t(lang, 'home.ch3.title')} description={t(lang, 'home.ch3.desc')} delay={0.3} />
-          </div>
+          <ScrollReveal delay={0.2} className="mt-10 md:mt-14">
+            <Book3D lang={lang} />
+          </ScrollReveal>
 
-          <ScrollReveal delay={0.4} className="mt-20 text-center">
+          <ScrollReveal delay={0.2} className="mt-16 text-center">
             <Link
               to="/journey"
-              className="inline-flex items-center gap-3 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-accent transition-colors duration-300 group"
+              className="inline-flex items-center gap-3 rounded-full bg-foreground text-background px-7 py-3.5 font-body text-xs tracking-[0.2em] uppercase hover:bg-accent transition-colors duration-300 group shadow-lg"
             >
               {t(lang, 'home.cta')}
-              <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
+              <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </ScrollReveal>
 
@@ -215,17 +223,3 @@ function PhoneReel({ code, color, delay, rotate, offset }) {
     </motion.div>
   );
 }
-
-function ChapterCard({ number, title, description, delay }) {
-  return (
-    <ScrollReveal delay={delay}>
-      <div className="group cursor-pointer">
-        <span className="font-body text-accent/50 text-xs tracking-[0.3em]">{number}</span>
-        <h3 className="font-display text-2xl md:text-3xl text-foreground mt-2 mb-4 group-hover:text-accent transition-colors duration-300">{title}</h3>
-        <p className="font-body text-muted-foreground text-sm leading-relaxed">{description}</p>
-        <div className="mt-6 h-px bg-border group-hover:bg-accent/40 transition-colors duration-500" />
-      </div>
-    </ScrollReveal>
-  );
-}
-

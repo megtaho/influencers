@@ -31,11 +31,17 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'bg-background/80 backdrop-blur-xl shadow-sm' : 'bg-transparent'
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? 'top-3 px-3 md:px-6' : 'top-0 px-0'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+        <div
+          className={`mx-auto flex items-center justify-between transition-all duration-500 ${
+            scrolled
+              ? 'max-w-5xl h-14 md:h-16 px-5 md:px-8 rounded-full bg-background/70 backdrop-blur-xl border border-border/60 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'
+              : 'max-w-7xl h-16 md:h-20 px-6 md:px-10 border border-transparent'
+          }`}
+        >
           <Link to="/" className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
             Les Gawas
           </Link>
@@ -94,7 +100,7 @@ function LangSwitch({ lang }) {
   return (
     <button
       onClick={toggleLang}
-      className="flex items-center gap-1 font-body text-xs tracking-widest uppercase border border-foreground/20 hover:border-accent hover:text-accent text-foreground/60 transition-all duration-300 px-3 py-1.5 rounded-sm"
+      className="flex items-center gap-1 font-body text-xs tracking-widest uppercase border border-foreground/20 hover:border-accent hover:text-accent text-foreground/60 transition-all duration-300 px-3 py-1.5 rounded-full"
     >
       <span className={lang === 'fr' ? 'text-accent font-semibold' : ''}>FR</span>
       <span className="text-foreground/30">·</span>
