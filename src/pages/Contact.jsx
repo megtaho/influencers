@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Mail, MapPin, Send, Instagram, Youtube, Music } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { MapPin, Send, Instagram, Youtube, Music, Copy, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -96,127 +95,141 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 md:px-10 py-20 md:py-28">
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-16">
-          <ScrollReveal className="lg:col-span-3" delay={0.1}>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-accent/20 rounded-lg p-6 md:p-10 shadow-xl">
-              <input
-                type="text"
-                value={form.website}
-                onChange={updateField('website')}
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                className="hidden"
-              />
-              <div className="grid sm:grid-cols-2 gap-6">
+      <div className="relative max-w-6xl mx-auto px-4 md:px-10 py-16 md:py-24">
+        <ScrollReveal>
+          <div className="relative rounded-[2rem] border border-accent/20 shadow-xl overflow-hidden">
+            <div className="grid lg:grid-cols-5 bg-card">
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="lg:col-span-3 p-6 md:p-12 space-y-6">
+                <input
+                  type="text"
+                  value={form.website}
+                  onChange={updateField('website')}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <div>
-                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.name')}</label>
-                  <Input required value={form.name} onChange={updateField('name')} placeholder={t(lang, 'contact.nameph')} className="bg-background border-border font-body h-12" />
+                  <h2 className="font-display text-3xl md:text-4xl text-foreground tracking-tight">{lang === 'fr' ? 'Écrivez-nous' : 'Write to us'}</h2>
+                  <p className="font-body text-sm text-muted-foreground mt-2">{lang === 'fr' ? 'Les champs marqués * sont obligatoires.' : 'Fields marked * are required.'}</p>
                 </div>
-                <div>
-                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.email')}</label>
-                  <Input required type="email" value={form.email} onChange={updateField('email')} placeholder="hello@lesgawas.com" className="bg-background border-border font-body h-12" />
-                </div>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.company')}</label>
-                  <Input value={form.company} onChange={updateField('company')} placeholder={t(lang, 'contact.companph')} className="bg-background border-border font-body h-12" />
-                </div>
-                <div>
-                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.type')}</label>
-                  <Select value={form.type} onValueChange={(v) => setForm((f) => ({ ...f, type: v }))}>
-                    <SelectTrigger className="bg-background border-border font-body h-12">
-                      <SelectValue placeholder={t(lang, 'contact.select')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="brand">{t(lang, 'media.s1.title')}</SelectItem>
-                      <SelectItem value="stories">{t(lang, 'media.s2.title')}</SelectItem>
-                      <SelectItem value="travel">{t(lang, 'media.s3.title')}</SelectItem>
-                      <SelectItem value="creative">{t(lang, 'media.s4.title')}</SelectItem>
-                      <SelectItem value="other">{t(lang, 'contact.other')}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              {form.type === 'other' && (
-                <div>
-                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.otherLabel')}</label>
-                  <Input
-                    required
-                    autoFocus
-                    maxLength={120}
-                    value={form.otherType}
-                    onChange={updateField('otherType')}
-                    placeholder={t(lang, 'contact.otherph')}
-                    className="bg-background border-border font-body h-12"
-                  />
-                </div>
-              )}
-              <div>
-                <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.message')}</label>
-                <Textarea required rows={6} value={form.message} onChange={updateField('message')} placeholder={t(lang, 'contact.messageph')} className="bg-background border-border font-body resize-none" />
-              </div>
-              <Button
-                type="submit"
-                disabled={sending}
-                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body text-sm tracking-[0.15em] uppercase h-12 px-10 rounded-sm"
-              >
-                {sending ? (
-                  <span className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
-                    {t(lang, 'contact.sending')}
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <Send size={16} />
-                    {t(lang, 'contact.send')}
-                  </span>
-                )}
-              </Button>
-            </form>
-          </ScrollReveal>
 
-          <ScrollReveal className="lg:col-span-2" delay={0.2}>
-            <div className="space-y-10 bg-card border border-accent/20 rounded-lg p-6 md:p-10 shadow-xl h-full">
-              <div>
-                <h3 className="font-display text-lg text-foreground">{t(lang, 'contact.info')}</h3>
-                <div className="w-8 h-[2px] bg-accent mt-2 mb-5" />
-                <div className="space-y-4">
-                  <a href="mailto:contact@lesgawas.com" className="flex items-center gap-3 font-body text-sm text-muted-foreground hover:text-accent transition-colors">
-                    <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-                      <Mail size={14} className="text-accent" />
-                    </span>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <Field label={`${t(lang, 'contact.name')} *`}>
+                    <Input required value={form.name} onChange={updateField('name')} placeholder={t(lang, 'contact.nameph')} className={FIELD} />
+                  </Field>
+                  <Field label={`${t(lang, 'contact.email')} *`}>
+                    <Input required type="email" value={form.email} onChange={updateField('email')} placeholder="hello@lesgawas.com" className={FIELD} />
+                  </Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <Field label={t(lang, 'contact.company')}>
+                    <Input value={form.company} onChange={updateField('company')} placeholder={t(lang, 'contact.companph')} className={FIELD} />
+                  </Field>
+                  <Field label={t(lang, 'contact.type')}>
+                    <Select value={form.type} onValueChange={(v) => setForm((f) => ({ ...f, type: v }))}>
+                      <SelectTrigger className={FIELD}>
+                        <SelectValue placeholder={t(lang, 'contact.select')} />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl">
+                        <SelectItem value="brand">{t(lang, 'media.s1.title')}</SelectItem>
+                        <SelectItem value="stories">{t(lang, 'media.s2.title')}</SelectItem>
+                        <SelectItem value="travel">{t(lang, 'media.s3.title')}</SelectItem>
+                        <SelectItem value="creative">{t(lang, 'media.s4.title')}</SelectItem>
+                        <SelectItem value="other">{t(lang, 'contact.other')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
+                {form.type === 'other' && (
+                  <Field label={`${t(lang, 'contact.otherLabel')} *`}>
+                    <Input
+                      required
+                      autoFocus
+                      maxLength={120}
+                      value={form.otherType}
+                      onChange={updateField('otherType')}
+                      placeholder={t(lang, 'contact.otherph')}
+                      className={FIELD}
+                    />
+                  </Field>
+                )}
+                <Field label={`${t(lang, 'contact.message')} *`}>
+                  <div className="relative">
+                    <Textarea
+                      required
+                      rows={6}
+                      maxLength={3000}
+                      value={form.message}
+                      onChange={updateField('message')}
+                      placeholder={t(lang, 'contact.messageph')}
+                      className={`${FIELD} h-auto py-3 resize-none`}
+                    />
+                    <span className="absolute bottom-3 right-4 font-body text-[10px] text-muted-foreground/60 tabular-nums">{form.message.length}/3000</span>
+                  </div>
+                </Field>
+
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-full bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-60 transition-colors h-14 px-10 font-body text-xs tracking-[0.2em] uppercase shadow-lg"
+                >
+                  {sending ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                      {t(lang, 'contact.sending')}
+                    </>
+                  ) : (
+                    <>
+                      {t(lang, 'contact.send')}
+                      <Send size={15} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* Info panel */}
+              <aside className="lg:col-span-2 relative overflow-hidden bg-card text-foreground border-t lg:border-t-0 lg:border-l border-accent/20 p-6 md:p-12 flex flex-col">
+
+                <div className="relative">
+                  <p className="font-body text-[11px] tracking-[0.3em] uppercase text-accent">{t(lang, 'contact.info')}</p>
+                  <a href="mailto:contact@lesgawas.com" className="block font-display text-2xl md:text-3xl mt-4 break-all hover:text-accent transition-colors">
                     contact@lesgawas.com
                   </a>
-                  <div className="flex items-center gap-3 font-body text-sm text-muted-foreground">
-                    <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-                      <MapPin size={14} className="text-accent" />
+                  <div className="flex flex-wrap items-center gap-3 mt-4">
+                    <CopyEmail lang={lang} />
+                    <span className="inline-flex items-center gap-1.5 font-body text-xs text-muted-foreground">
+                      <MapPin size={13} className="text-accent" /> Internationale
                     </span>
-                    Internationale
                   </div>
                 </div>
-              </div>
-              <div className="h-px bg-border" />
-              <div>
-                <h3 className="font-display text-lg text-foreground">{t(lang, 'contact.socials')}</h3>
-                <div className="w-8 h-[2px] bg-accent mt-2 mb-5" />
-                <div className="space-y-4">
-                  {socials.map((s) => (
-                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-body text-sm text-muted-foreground hover:text-accent transition-colors group">
-                      <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/20 transition-colors">
-                        <s.icon size={14} className="text-accent" />
-                      </span>
-                      <span>{s.label}</span>
-                      <span className="text-muted-foreground/40 ml-auto">{s.handle}</span>
-                    </a>
-                  ))}
+
+                <div className="relative mt-12">
+                  <p className="font-body text-[11px] tracking-[0.3em] uppercase text-accent">{t(lang, 'contact.socials')}</p>
+                  <div className="mt-4 divide-y divide-border border-y border-border">
+                    {socials.map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-4 py-4 transition-colors hover:text-accent"
+                      >
+                        <span className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/20 transition-colors"><s.icon size={14} className="text-accent" /></span>
+                        <span className="font-display text-xl">{s.label}</span>
+                        <span className="ml-auto font-body text-xs text-muted-foreground/60">{s.handle}</span>
+                        <span className="text-muted-foreground/40 group-hover:text-accent transition-colors">↗</span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+
+                <p className="relative mt-auto pt-12 font-display italic text-lg text-muted-foreground">Megan & Imaan</p>
+              </aside>
             </div>
-          </ScrollReveal>
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
 
       <footer className="border-t border-border py-10 px-6 md:px-10">
@@ -226,5 +239,36 @@ export default function Contact() {
         </div>
       </footer>
     </div>
+  );
+}
+const FIELD =
+  'h-12 rounded-xl bg-background border-border font-body transition-all focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-0 focus-visible:border-accent';
+
+function Field({ label, children }) {
+  return (
+    <label className="block">
+      <span className="font-body text-[11px] tracking-[0.15em] text-muted-foreground uppercase mb-2 block">{label}</span>
+      {children}
+    </label>
+  );
+}
+
+function CopyEmail({ lang }) {
+  const [copied, setCopied] = useState(false);
+  const label = copied ? (lang === 'fr' ? 'Copié' : 'Copied') : lang === 'fr' ? "Copier l'email" : 'Copy email';
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        navigator.clipboard?.writeText('contact@lesgawas.com').then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        });
+      }}
+      className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 px-3 py-1.5 font-body text-[11px] tracking-wider text-accent hover:border-accent hover:text-accent transition-colors"
+    >
+      {copied ? <Check size={12} /> : <Copy size={12} />}
+      {label}
+    </button>
   );
 }
