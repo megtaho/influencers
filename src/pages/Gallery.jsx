@@ -313,38 +313,9 @@ function MarqueeRow({ items }) {
   );
 }
 
-const tiktokThumbCache = new Map();
-
-function useTikTokThumbnail(id) {
-  const [thumbnail, setThumbnail] = useState(() => tiktokThumbCache.get(id) ?? null);
-
-  useEffect(() => {
-    if (tiktokThumbCache.has(id)) {
-      setThumbnail(tiktokThumbCache.get(id));
-      return;
-    }
-    let cancelled = false;
-    fetch(`https://www.tiktok.com/oembed?url=https://www.tiktok.com/@x/video/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const url = data.thumbnail_url || null;
-        tiktokThumbCache.set(id, url);
-        if (!cancelled) setThumbnail(url);
-      })
-      .catch(() => {
-        tiktokThumbCache.set(id, null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
-
-  return thumbnail;
-}
-
 function LazyTikTok({ id, caption, onPlay }) {
   const [loaded, setLoaded] = useState(false);
-  const thumbnail = useTikTokThumbnail(id);
+  const [coverOk, setCoverOk] = useState(true);
 
   if (!loaded) {
     return (
@@ -355,14 +326,22 @@ function LazyTikTok({ id, caption, onPlay }) {
           onPlay?.();
         }}
         aria-label={caption ? `${caption} — lecture` : 'Lecture'}
-        className="relative w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900 bg-cover bg-center"
-        style={thumbnail ? { backgroundImage: `url(${thumbnail})` } : undefined}
+        className="relative w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-black/35" />
-        <span className="relative w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/25 transition-transform duration-300 group-hover:scale-110">
+        {coverOk && (
+          <img
+            src={`/tiktok-covers/${id}.jpg`}
+            alt={caption || ''}
+            loading="lazy"
+            draggable={false}
+            onError={() => setCoverOk(false)}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-black/10" />
+        <span className="relative w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 transition-transform duration-300 group-hover:scale-110">
           <Play size={18} className="text-white fill-white ml-0.5" />
         </span>
-        <span className="relative font-body text-[10px] tracking-[0.25em] uppercase text-white/40">TikTok</span>
       </button>
     );
   }
