@@ -205,7 +205,7 @@ export default function Book3D({ lang }) {
           {/* Base right page, shown once every leaf is turned */}
           <div
             className="absolute top-0 left-1/2 w-1/2 h-full overflow-hidden shadow-2xl"
-            style={{ borderRadius: '0 10px 10px 0', transform: 'translateZ(-2px)' }}
+            style={{ borderRadius: '0 10px 10px 0', transform: 'translateZ(0.2px)' }}
           >
             <HeartPage lang={lang} />
             <div className="pointer-events-none absolute inset-0" style={{ background: spineShadeRight }} />
