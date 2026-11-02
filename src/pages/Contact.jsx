@@ -16,12 +16,12 @@ const socials = [
 ];
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const COLLAB_TYPE_LABELS = { brand: 'media.s1.title', stories: 'media.s2.title', travel: 'media.s3.title', creative: 'media.s4.title' };
+const COLLAB_TYPE_LABELS = { brand: 'media.s1.title', stories: 'media.s2.title', travel: 'media.s3.title', creative: 'media.s4.title', other: 'contact.other' };
 
 export default function Contact() {
   const lang = useLanguage();
   const [sending, setSending] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', message: '', website: '' });
+  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', otherType: '', message: '', website: '' });
 
   const updateField = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 
@@ -42,7 +42,9 @@ export default function Contact() {
           name: form.name,
           email: form.email,
           company: form.company,
-          type: form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '',
+          type: form.type === 'other' && form.otherType.trim()
+            ? `${t(lang, 'contact.other')} : ${form.otherType.trim()}`
+            : form.type ? t(lang, COLLAB_TYPE_LABELS[form.type]) : '',
           message: form.message,
           website: form.website,
           lang,
@@ -52,7 +54,7 @@ export default function Contact() {
       if (!res.ok || !result.success) throw new Error(result.error || 'send failed');
 
       toast.success(t(lang, 'contact.success'));
-      setForm({ name: '', email: '', company: '', type: '', message: '', website: '' });
+      setForm({ name: '', email: '', company: '', type: '', otherType: '', message: '', website: '' });
     } catch {
       toast.error(t(lang, 'contact.error'));
     } finally {
@@ -133,10 +135,25 @@ export default function Contact() {
                       <SelectItem value="stories">{t(lang, 'media.s2.title')}</SelectItem>
                       <SelectItem value="travel">{t(lang, 'media.s3.title')}</SelectItem>
                       <SelectItem value="creative">{t(lang, 'media.s4.title')}</SelectItem>
+                      <SelectItem value="other">{t(lang, 'contact.other')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
+              {form.type === 'other' && (
+                <div>
+                  <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.otherLabel')}</label>
+                  <Input
+                    required
+                    autoFocus
+                    maxLength={120}
+                    value={form.otherType}
+                    onChange={updateField('otherType')}
+                    placeholder={t(lang, 'contact.otherph')}
+                    className="bg-background border-border font-body h-12"
+                  />
+                </div>
+              )}
               <div>
                 <label className="font-body text-xs tracking-wider text-muted-foreground uppercase mb-2 block">{t(lang, 'contact.message')}</label>
                 <Textarea required rows={6} value={form.message} onChange={updateField('message')} placeholder={t(lang, 'contact.messageph')} className="bg-background border-border font-body resize-none" />

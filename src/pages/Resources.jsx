@@ -270,16 +270,7 @@ export default function Resources() {
 
       <div className="max-w-6xl mx-auto px-6 md:px-10 pb-24 md:pb-40">
         {/* Advocacy block */}
-        <ScrollReveal delay={0.15} className="mt-12">
-          <div className="bg-card rounded-lg p-8 md:p-12 border border-border relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <p className="font-body text-accent text-xs tracking-[0.3em] uppercase mb-3">{t(lang, 'res.advocacy.title')}</p>
-            <p className="font-body text-foreground/80 text-base md:text-lg leading-relaxed max-w-3xl whitespace-pre-line">
-              {t(lang, 'res.advocacy.desc')}
-            </p>
-            <p className="font-display text-muted-foreground/40 text-xl md:text-2xl mt-6">— Megan & Imaan, @lesgawas</p>
-          </div>
-        </ScrollReveal>
+        <Manifesto lang={lang} />
 
         {/* Vous n'êtes pas seul·e */}
         <ScrollReveal delay={0.1} className="mt-20 md:mt-32">
@@ -381,5 +372,106 @@ export default function Resources() {
         </ScrollReveal>
       </div>
     </div>
+  );
+}
+// "Notre engagement" laid out as a manifesto: one visual treatment per idea.
+function Manifesto({ lang }) {
+  const p = t(lang, 'res.advocacy.desc').split('\n\n');
+  const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+  const after = (txt) => txt.slice(txt.indexOf(':') + 1).trim();
+  const before = (txt) => txt.slice(0, txt.indexOf(':') + 1).trim();
+
+  const values = after(p[1]).replace(/\.$/, '').split(/,\s*|\s+(?:et|and)\s+/).map((v) => cap(v.replace(/^(la|le|l'|the)\s*/i, '').trim())).filter(Boolean);
+  const questions = after(p[3]).split('?').map((q) => q.trim()).filter(Boolean).map((q) => cap(q) + (lang === 'fr' ? ' ?' : '?'));
+  const truths = p[6].split(/(?<=\.)\s+/).filter(Boolean);
+  const finalWords = after(p[7]).replace(/\.$/, '').split(/,\s*/);
+
+  return (
+    <section className="mt-12 md:mt-16">
+      <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card px-6 py-14 md:px-16 md:py-24">
+        <div aria-hidden="true" className="pointer-events-none absolute -top-32 -right-24 w-96 h-96 rounded-full bg-accent/10 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-[#9B30D9]/10 blur-3xl" />
+
+        {/* Opening */}
+        <ScrollReveal>
+          <p className="relative font-body text-accent text-xs tracking-[0.3em] uppercase">{t(lang, 'res.advocacy.title')}</p>
+          <h2 className="relative font-display text-3xl md:text-5xl lg:text-6xl text-foreground leading-[1.1] tracking-tight mt-6 max-w-4xl">
+            {p[0]}
+          </h2>
+        </ScrollReveal>
+
+        {/* Faith + love, shared values */}
+        <div className="relative grid md:grid-cols-[1fr_1.1fr] gap-10 md:gap-16 mt-16 md:mt-24 items-center">
+          <ScrollReveal>
+            <p className="font-body text-foreground/75 text-base md:text-lg leading-relaxed">{before(p[1])}</p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <ul className="divide-y divide-border border-y border-border">
+              {values.map((v, i) => (
+                <li key={v} className="flex items-baseline gap-5 py-4 md:py-5">
+                  <span className="font-body text-[11px] tracking-[0.2em] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="font-display italic text-2xl md:text-4xl text-foreground">{v}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollReveal>
+        </div>
+
+        {/* A space for everyone */}
+        <ScrollReveal className="relative mt-16 md:mt-24 max-w-3xl md:ml-auto">
+          <p className="font-body text-foreground/75 text-base md:text-lg leading-relaxed border-l-2 border-accent pl-6">{p[2]}</p>
+        </ScrollReveal>
+
+        {/* The hard questions */}
+        <div className="relative mt-16 md:mt-24">
+          <ScrollReveal>
+            <p className="font-body text-muted-foreground text-sm md:text-base leading-relaxed max-w-2xl">{before(p[3])}</p>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6 mt-8">
+            {questions.map((q, i) => (
+              <ScrollReveal key={q} delay={i * 0.1}>
+                <div className="h-full rounded-2xl bg-background/70 backdrop-blur border border-border p-6 md:p-8">
+                  <span className="font-display text-5xl leading-none text-accent/30">?</span>
+                  <p className="font-display italic text-lg md:text-xl text-foreground leading-snug mt-4">{q}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Paths */}
+        <ScrollReveal className="relative mt-16 md:mt-24 text-center max-w-3xl mx-auto">
+          <p className="font-display text-2xl md:text-4xl text-foreground leading-snug">{p[4]}</p>
+        </ScrollReveal>
+
+        <ScrollReveal className="relative mt-10 max-w-3xl mx-auto text-center">
+          <p className="font-body text-foreground/70 text-base md:text-lg leading-relaxed">{p[5]}</p>
+        </ScrollReveal>
+
+        {/* Three truths */}
+        <div className="relative mt-16 md:mt-24 space-y-3 md:space-y-4">
+          {truths.map((tr, i) => (
+            <ScrollReveal key={tr} delay={i * 0.1} direction={i % 2 ? 'left' : 'right'}>
+              <p className={`font-display text-2xl md:text-4xl leading-tight ${i === truths.length - 1 ? 'text-accent' : 'text-foreground'} ${i % 2 ? 'md:text-right' : ''}`}>
+                {tr}
+              </p>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Closing message */}
+        <ScrollReveal className="relative mt-20 md:mt-28 text-center">
+          <p className="font-body text-muted-foreground text-sm md:text-base">{before(p[7])}</p>
+          <div className="mt-6 flex flex-col items-center gap-1 md:gap-2">
+            {finalWords.map((w) => (
+              <span key={w} className="font-display italic text-4xl md:text-6xl lg:text-7xl leading-[1.05] bg-gradient-to-r from-accent via-[#e0567a] to-[#9B30D9] bg-clip-text text-transparent">
+                {w}
+              </span>
+            ))}
+          </div>
+          <p className="font-display text-muted-foreground text-lg md:text-xl mt-12">— Megan & Imaan, @lesgawas</p>
+        </ScrollReveal>
+      </div>
+    </section>
   );
 }
